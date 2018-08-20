@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Stanford CoreNLP
 
 [![Build Status](https://travis-ci.org/stanfordnlp/CoreNLP.svg?branch=master)](https://travis-ci.org/stanfordnlp/CoreNLP)
@@ -63,3 +64,9 @@ For information about making contributions to Stanford CoreNLP, see the file [CO
 
 Questions about CoreNLP can either be posted on StackOverflow with the tag [stanford-nlp](http://stackoverflow.com/questions/tagged/stanford-nlp),
   or on the [mailing lists](https://nlp.stanford.edu/software/#Mail).
+=======
+# I-SURF-Designing-cyber-physical-systems
+2018 I-SURF Project 
+Designing Cyber-Physical Systems from Specifications using Natural Language Processing 
+NLP Processing with Standford parser
+>>>>>>> refs/remotes/origin/master
