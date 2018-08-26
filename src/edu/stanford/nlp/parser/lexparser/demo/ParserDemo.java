@@ -18,8 +18,10 @@ import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.parser.common.ParserQuery;
 import edu.stanford.nlp.ling.Word;
 import edu.stanford.nlp.trees.*;
+import edu.stanford.nlp.trees.tregex.TregexMatcher;
 import edu.stanford.nlp.trees.tregex.TregexPattern;
 import edu.stanford.nlp.trees.tregex.tsurgeon.Tsurgeon;
+import edu.stanford.nlp.trees.tregex.tsurgeon.TsurgeonMatcher;
 import edu.stanford.nlp.trees.tregex.tsurgeon.TsurgeonPattern;
 import edu.stanford.nlp.util.ScoredObject;
 import edu.stanford.nlp.util.StringUtils;
@@ -106,8 +108,8 @@ class ParserDemo {
 	Tree final_tree=null;
 	 List<TypedDependency> final_tdl = null ; 
     // This option shows loading and using an explicit tokenizer
-    String sent2 = "The user indicates that she wants to purchase items which she has selected";
-  
+   // String sent2 = "The system displays screen which indicates the list.";
+	 String sent2 = "Print the value which user entered on the screen.";
     
     TokenizerFactory<CoreLabel> tokenizerFactory =
         PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
@@ -117,6 +119,8 @@ class ParserDemo {
    // System.out.println("rawWords:" + rawWords2);
     parses = lp.kparse(rawWords2);
     int ii = 0;
+    
+    // **This code is for finding the final parser tree that has dobj or nsubjpass among the 5 best parses 
     for (ScoredObject<Tree> parse : parses) {
     	ii++;
         Tree t = parse.object();
@@ -148,43 +152,124 @@ class ParserDemo {
     
    
     
+    // This code is for extracting information from dependecies or parser tree
     
     String nsbj = "";
     String dobj = "";
     String nmod = "";
     String verb="";
-    int rel_flag = 0;
+    String rel_dobj="";
+    String rel_nsubj="";
+    String rel_verb="";
+    
+    int sub_flag = 0;
     String rel_noun="";
-    ArrayList<Word> rel_tree;
+    Tree rel_tree;
+    ArrayList<Word> subc_tree;
     String rel_clause;
-    int index;
+    String sub_clause;
+    String rel_gov = "";
+    String rel_dep="";
     //System.out.println("Print extraction");
     Tree main;
    
-
-
+  
+    
     for (Tree subTree : final_tree) // traversing the sentence's parse tree 
 	{	
-    	    	//System.out.println(subTree.firstChild().label().value());
+    	
 	     if(subTree.label().value().equals("SBAR")) //If the word's label is SBAR
-	      { //Do what you want 
+	      {     	 
 	    	 if(subTree.firstChild().label().value().equals("WHNP")) { 
-	    		 System.out.println("Clause Tree: " +subTree);
-	    		 rel_tree = subTree.yieldWords();
-	    		 rel_clause = rel_tree.stream().map(e->e.toString()).collect(Collectors.joining(" "));
-	    		 System.out.println(rel_clause);
-	    	  	 rel_flag=1; // flag check _ if we deal the file then we have to change it as iteral and itialize it.
-	    	  	 
-	    	  	 
+	    		// System.out.println("Clause Tree: " +subTree);
+	    		 rel_tree = subTree;
+	    		 ArrayList<Word> rel_list = subTree.yieldWords();
+	    		 rel_clause = rel_list.stream().map(e->e.toString()).collect(Collectors.joining(" "));
+	    	// System.out.println(rel_tree.rel_tree.label().value().equals("VBD")));
+	    		 System.out.println("rel_phrase "+rel_clause);
+	    	  	 sub_flag=1; // flag check _ if we deal the file then we have to change it as iteral and itialize it.
+
 	    	 }
+	    //"IN" case,
+	    	/* else if(subTree.firstChild().label().value().equals("IN")) {
+	    		  subc_tree=subTree.yieldWords();
+	    		  sub_clause = subc_tree.stream().map(e->e.toString()).collect(Collectors.joining(" "));
+	    		  System.out.println("Sub_phrase "+sub_clause);
+		    	  sub_flag=1;
+	    		 
+	    	 }*/
 	      }
 	}
     
     
     for (int i = 0; i < final_tdl.size(); i++) {
     	String extractElement = final_tdl.get(i).reln().toString();
-    	
-    	 
+    	//System.out.println(extractElement);
+    	 //need to make it optimal
+        if(sub_flag==1) {
+     	   if (extractElement.equals("ref")) {
+     		   rel_noun = final_tdl.get(i).gov().originalText().toLowerCase();
+     		   System.out.println("relation_noun : " + rel_noun + "\r\n");
+            }
+     	   
+     	   if(extractElement.equals("dobj")){
+     		  for (int j = 0; j < final_tdl.size(); j++) {
+     		    	String extractlabel = final_tdl.get(j).reln().toString();
+     		    	if(extractlabel.equals("acl:relcl")) {
+     		    		rel_gov= final_tdl.get(j).gov().originalText().toLowerCase();
+     		    		rel_dep = final_tdl.get(j).dep().originalText().toLowerCase();
+     		    		break;
+     		    	}
+     		  }  
+     		 
+     		 String current_verb= final_tdl.get(i).gov().originalText().toLowerCase();
+     		 String current_dobj= final_tdl.get(i).dep().originalText().toLowerCase();
+     		  if(current_verb.equals(rel_dep)) {
+     			  if(current_dobj.equals(rel_gov))
+     			  {
+     				  rel_verb= current_verb;
+     				  System.out.println("Verb in relative clause "+rel_verb);
+     			  }
+     			  else {
+	     			  System.out.println("This is relative verb and dobj in relative clause");
+	     			  rel_dobj = current_dobj;
+	     			  rel_verb= current_verb;
+	     			  System.out.println("Rel obj: " + rel_dobj+" rel verb: "+rel_verb);
+     			  }
+     			 continue;
+     		  }	  
+     	   }
+     	   
+     	   if(extractElement.equals("nsubj")){
+     		  for (int j = 0; j < final_tdl.size(); j++) {
+     		    	String extractlabel = final_tdl.get(j).reln().toString();
+     		    	if(extractlabel.equals("acl:relcl")) {
+     		    		rel_gov= final_tdl.get(j).gov().originalText().toLowerCase();
+     		    		rel_dep = final_tdl.get(j).dep().originalText().toLowerCase();
+     		    		break;
+     		    	}
+     		  }  
+     		 
+      		 String current_verb= final_tdl.get(i).gov().originalText().toLowerCase();
+      		 String current_nsbj= final_tdl.get(i).dep().originalText().toLowerCase();
+      		  if(current_verb.equals(rel_dep)) {
+     			  if(current_nsbj.equals(rel_gov))
+     			  {
+     				  rel_verb= current_verb;
+     				  System.out.println("Verb in relative clause "+rel_verb);
+     			  }
+     			  else {
+	     			  System.out.println("This is relative verb and dobj in relative clause");
+	     			  rel_nsubj = current_nsbj;
+	     			  rel_verb= current_verb;
+	     			  System.out.println("Rel nsbj: " + rel_nsubj+" rel verb: "+rel_verb);
+     			  }
+     			 continue;
+     		  }	   
+     	   }
+     	//add rel sub + verb  and connect to dobj   
+        }
+        
        if (extractElement.equals("nsubj")) {
           nsbj =  final_tdl.get(i).dep().originalText().toLowerCase();
           System.out.println("nsbj: " +nsbj + "\r\n");
@@ -201,13 +286,7 @@ class ParserDemo {
            dobj = final_tdl.get(i).dep().originalText().toLowerCase();
            System.out.println("dobj: " + dobj + "\r\n");
        }
-       if(rel_flag==1) {
-    	   if (extractElement.equals("ref")) {
-    		   rel_noun = final_tdl.get(i).gov().originalText().toLowerCase();
-    		   System.out.println("relation_noun : " + rel_noun + "\r\n");
-           }
-       
-	  }
+
        if (extractElement.contains("nmod")) {
     	   	   String prep;
     	   	 //  prep = extractElement.substring(5);
@@ -216,12 +295,10 @@ class ParserDemo {
                System.out.println("nmod: " +nmod + "\r\n");
            
          }
-    }
   
-	
+    }
 	   
      //  System.out.println("Type dependency list" +tdl);
-    System.out.println();
   //  System.out.println("after dependency " + parse);
     
     // You can also use a TreePrint object to print trees and dependencies  tree and dependency both are printed 
