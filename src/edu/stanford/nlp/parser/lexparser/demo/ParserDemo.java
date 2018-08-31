@@ -109,7 +109,8 @@ class ParserDemo {
 	 List<TypedDependency> final_tdl = null ; 
     // This option shows loading and using an explicit tokenizer
    // String sent2 = "The system displays screen which indicates the list.";
-	 String sent2 = "Print the value which user entered on the screen.";
+	 String sent2 = "User watches screen which indicates previous work";
+	 System.out.println(sent2);
     
     TokenizerFactory<CoreLabel> tokenizerFactory =
         PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
@@ -162,60 +163,52 @@ class ParserDemo {
     String rel_nsubj="";
     String rel_verb="";
     
-    int sub_flag = 0;
-    String rel_noun="";
-    Tree rel_tree;
+    int sub_flag = 0; // which clause flag 
+    String rel_noun="";  //extract antecedent 
+    Tree rel_tree;       // relative clause tree extraction
     ArrayList<Word> subc_tree;
     String rel_clause;
-    String sub_clause;
-    String rel_gov = "";
+    String rel_gov = ""; //The reason why I use gov, dep is that there are two cases of which clause,NSUBJ,DOBJ
     String rel_dep="";
-    //System.out.println("Print extraction");
-    Tree main;
+
+   
    
   
-    
-    for (Tree subTree : final_tree) // traversing the sentence's parse tree 
+ // traversing the sentence's parse tree 
+    for (Tree subTree : final_tree)
 	{	
     	
 	     if(subTree.label().value().equals("SBAR")) //If the word's label is SBAR
 	      {     	 
 	    	 if(subTree.firstChild().label().value().equals("WHNP")) { 
-	    		// System.out.println("Clause Tree: " +subTree);
 	    		 rel_tree = subTree;
 	    		 ArrayList<Word> rel_list = subTree.yieldWords();
 	    		 rel_clause = rel_list.stream().map(e->e.toString()).collect(Collectors.joining(" "));
-	    	// System.out.println(rel_tree.rel_tree.label().value().equals("VBD")));
 	    		 System.out.println("rel_phrase "+rel_clause);
 	    	  	 sub_flag=1; // flag check _ if we deal the file then we have to change it as iteral and itialize it.
-
 	    	 }
-	    //"IN" case,
-	    	/* else if(subTree.firstChild().label().value().equals("IN")) {
-	    		  subc_tree=subTree.yieldWords();
-	    		  sub_clause = subc_tree.stream().map(e->e.toString()).collect(Collectors.joining(" "));
-	    		  System.out.println("Sub_phrase "+sub_clause);
-		    	  sub_flag=1;
-	    		 
-	    	 }*/
+	 
 	      }
 	}
     
-    
+ 
+    //check dependency parser    
     for (int i = 0; i < final_tdl.size(); i++) {
     	String extractElement = final_tdl.get(i).reln().toString();
-    	//System.out.println(extractElement);
     	 //need to make it optimal
+    	//When sub_flag ==1 , when there is a which clause in sentence
         if(sub_flag==1) {
-     	   if (extractElement.equals("ref")) {
+     	  /* if (extractElement.equals("ref")) { //antecedent extraction
      		   rel_noun = final_tdl.get(i).gov().originalText().toLowerCase();
      		   System.out.println("relation_noun : " + rel_noun + "\r\n");
-            }
+            }*/
      	   
      	   if(extractElement.equals("dobj")){
-     		  for (int j = 0; j < final_tdl.size(); j++) {
+     		  for (int j = 0; j < final_tdl.size(); j++) 
+     		  {
      		    	String extractlabel = final_tdl.get(j).reln().toString();
-     		    	if(extractlabel.equals("acl:relcl")) {
+     		    	if(extractlabel.equals("acl:relcl"))  //acl:relcl pair extraction for comparing
+     		    	{
      		    		rel_gov= final_tdl.get(j).gov().originalText().toLowerCase();
      		    		rel_dep = final_tdl.get(j).dep().originalText().toLowerCase();
      		    		break;
@@ -224,14 +217,16 @@ class ParserDemo {
      		 
      		 String current_verb= final_tdl.get(i).gov().originalText().toLowerCase();
      		 String current_dobj= final_tdl.get(i).dep().originalText().toLowerCase();
-     		  if(current_verb.equals(rel_dep)) {
-     			  if(current_dobj.equals(rel_gov))
+     		 
+     		  if(current_verb.equals(rel_dep)) { //it means that this dobj is dobj of which clause
+     			  if(current_dobj.equals(rel_gov)) // this dobj is antecedent 
      			  {
-     				  rel_verb= current_verb;
+     				  rel_verb= current_verb; //only verb extraction
      				  System.out.println("Verb in relative clause "+rel_verb);
      			  }
-     			  else {
-	     			  System.out.println("This is relative verb and dobj in relative clause");
+     			  else //only verb is eql and dobj is different means that this dobj is dobj of which clause but not antecedent
+     			  {
+	     			  System.out.println("This is relative verb and dobj of relatvie clause");
 	     			  rel_dobj = current_dobj;
 	     			  rel_verb= current_verb;
 	     			  System.out.println("Rel obj: " + rel_dobj+" rel verb: "+rel_verb);
@@ -249,7 +244,6 @@ class ParserDemo {
      		    		break;
      		    	}
      		  }  
-     		 
       		 String current_verb= final_tdl.get(i).gov().originalText().toLowerCase();
       		 String current_nsbj= final_tdl.get(i).dep().originalText().toLowerCase();
       		  if(current_verb.equals(rel_dep)) {
@@ -267,8 +261,15 @@ class ParserDemo {
      			 continue;
      		  }	   
      	   }
-     	//add rel sub + verb  and connect to dobj   
+     	//add rel sub + verb  and connect to dobj  after loop 
         }
+        
+        
+        
+        
+        
+        
+        
         
        if (extractElement.equals("nsubj")) {
           nsbj =  final_tdl.get(i).dep().originalText().toLowerCase();
@@ -287,14 +288,14 @@ class ParserDemo {
            System.out.println("dobj: " + dobj + "\r\n");
        }
 
-       if (extractElement.contains("nmod")) {
+      /* if (extractElement.contains("nmod")) {
     	   	   String prep;
     	   	 //  prep = extractElement.substring(5);
     	   //	   System.out.println("prep: "+ " " + prep);
                nmod = final_tdl.get(i).gov().originalText().toLowerCase() + " " + final_tdl.get(i).dep().originalText().toLowerCase();
                System.out.println("nmod: " +nmod + "\r\n");
            
-         }
+         }*/
   
     }
 	   
