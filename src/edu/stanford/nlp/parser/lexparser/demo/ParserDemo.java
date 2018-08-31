@@ -109,7 +109,7 @@ class ParserDemo {
 	 List<TypedDependency> final_tdl = null ; 
     // This option shows loading and using an explicit tokenizer
    // String sent2 = "The system displays screen which indicates the list.";
-	 String sent2 = "User watches screen which indicates previous work";
+	 String sent2 = "Print the value which user entered on the screen.";
 	 System.out.println(sent2);
     
     TokenizerFactory<CoreLabel> tokenizerFactory =
