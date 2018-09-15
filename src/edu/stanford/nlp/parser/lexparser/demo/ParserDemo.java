@@ -109,7 +109,8 @@ class ParserDemo {
 	 List<TypedDependency> final_tdl = null ; 
     // This option shows loading and using an explicit tokenizer
    // String sent2 = "The system displays screen which indicates the list.";
-	 String sent2 = "Print the value which user entered on the screen.";
+	 String sent2 = "ATM displays the amount which a user entered.";
+	// String sent2 = "The machine releases the change.";
 	 System.out.println(sent2);
     
     TokenizerFactory<CoreLabel> tokenizerFactory =
@@ -154,6 +155,7 @@ class ParserDemo {
    
     
     // This code is for extracting information from dependecies or parser tree
+    Action act ;
     
     String nsbj = "";
     String dobj = "";
@@ -167,7 +169,7 @@ class ParserDemo {
     String rel_noun="";  //extract antecedent 
     Tree rel_tree;       // relative clause tree extraction
     ArrayList<Word> subc_tree;
-    String rel_clause;
+    String rel_clause="";
     String rel_gov = ""; //The reason why I use gov, dep is that there are two cases of which clause,NSUBJ,DOBJ
     String rel_dep="";
 
@@ -182,13 +184,22 @@ class ParserDemo {
 	      {     	 
 	    	 if(subTree.firstChild().label().value().equals("WHNP")) { 
 	    		 rel_tree = subTree;
+	    		 System.out.println(subTree);
 	    		 ArrayList<Word> rel_list = subTree.yieldWords();
 	    		 rel_clause = rel_list.stream().map(e->e.toString()).collect(Collectors.joining(" "));
-	    		 System.out.println("rel_phrase "+rel_clause);
+	    		 System.out.println("rel_phrase: "+rel_clause);
 	    	  	 sub_flag=1; // flag check _ if we deal the file then we have to change it as iteral and itialize it.
-	    	 }
-	 
+	    	 }		    	    	 
 	      }
+	    	
+	     if(subTree.label().value().equals("PP")) //If the word's label is SBAR
+	      {     	  
+	    		// rel_tree = subTree;
+	    		 ArrayList<Word> pre_list = subTree.yieldWords();
+	    		 String pre_phrase = pre_list.stream().map(e->e.toString()).collect(Collectors.joining(" "));
+	    		 System.out.println("pre_phrase: "+pre_phrase);
+	      }
+	    
 	}
     
  
@@ -222,11 +233,17 @@ class ParserDemo {
      			  if(current_dobj.equals(rel_gov)) // this dobj is antecedent 
      			  {
      				  rel_verb= current_verb; //only verb extraction
-     				  System.out.println("Verb in relative clause "+rel_verb);
+     				  System.out.println("Verb in relative clause: "+rel_verb);
+     				  Noun dobjc = new Noun();
+     				  dobjc.addNoun(current_dobj,rel_clause);
+     				  System.out.println(dobjc.name);
+     				  System.out.println(dobjc.modarr);
+     				  act = new Action();
+     				  act.setDobj(dobjc);
      			  }
      			  else //only verb is eql and dobj is different means that this dobj is dobj of which clause but not antecedent
      			  {
-	     			  System.out.println("This is relative verb and dobj of relatvie clause");
+	     			 // System.out.println("This is relative verb and dobj of relatvie clause");
 	     			  rel_dobj = current_dobj;
 	     			  rel_verb= current_verb;
 	     			  System.out.println("Rel obj: " + rel_dobj+" rel verb: "+rel_verb);
