@@ -179,7 +179,6 @@ class ParserDemo {
  // traversing the sentence's parse tree 
     for (Tree subTree : final_tree)
 	{	
-    	
 	     if(subTree.label().value().equals("SBAR")) //If the word's label is SBAR
 	      {     	 
 	    	 if(subTree.firstChild().label().value().equals("WHNP")) { 
