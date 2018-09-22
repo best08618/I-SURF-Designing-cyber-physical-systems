@@ -419,13 +419,15 @@ class ParserDemo {
 
 		System.out.println(" Subject : " + act.subj.name);
 		System.out.println(" Verb : " + act.pred.name);
-		System.out.println("dobj"+act.dobjarr.toArray());
+		
+		
 		for (int i = 0; i < act.modarr.size(); i++) {
 			for (int j = 0; j < act.dobjarr.size(); j++) {
 				if (sub_flag == 1 ) {
-					if(act.modarr.get(i).ante.equals(act.dobjarr.get(j).name)) {
+					if(act.dobjarr.get(j).name.equals(act.modarr.get(i).ante)) {
 						act.dobjarr.get(j).modarr.add(act.modarr.get(i));
-						//act.modarr.remove(i);
+						act.modarr.remove(i);
+						continue;
 					}
 				}
 				if (act.modarr.get(i).govIdx.equals(act.dobjarr.get(j).depIdx)) {
