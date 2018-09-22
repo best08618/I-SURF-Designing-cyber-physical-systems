@@ -2,13 +2,18 @@ package edu.stanford.nlp.parser.lexparser.demo;
 
 public class Verb {
 	String name;
-	public Verb()
-	{
+	String depIdx;
+
+	public Verb() {
 		this.name = "";
+		this.depIdx = "";
 	}
 
-	public void addVerb(String name)
-	{
-	this.name=name;
+	public void setName(String s) {
+		this.name = s;
+	}
+
+	public void setDepIdx(String idx) {
+		this.depIdx = idx;
 	}
 }

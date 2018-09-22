@@ -2,6 +2,7 @@ package edu.stanford.nlp.parser.lexparser.demo;
 
 public class Modifier {
 	String name;
+	String ante;
 	String relation;
 	String govIdx;
 
@@ -13,6 +14,10 @@ public class Modifier {
 
 	public void setName(String s) {
 		this.name = s;
+	}
+	
+	public void setante(String s) {
+		this.ante = s;
 	}
 
 	public void setRelation(String s) {

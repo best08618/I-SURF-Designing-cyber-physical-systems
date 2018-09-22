@@ -1,0 +1,60 @@
+Number 1 parse has dobj.
+Sentence : User inserts ATM card.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : User enters PIN.
+----------------------------------------
+Number 2 parse has dobj.
+Sentence : User chooses ¡®CASH¡¯.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : User enters amount.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : User enters account number.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : User checks the amount and chooses between ¡®yes¡¯ or ¡®no¡¯.
+----------------------------------------
+Sentence : User chooses between ¡®yes¡¯ or ¡®no¡¯.
+There are no dobj in 5 parses
+===========================================================================
+Number 1 parse has dobj.
+Sentence : ATM reads the information of the card.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : ATM requires the user¡¯s PIN.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : ATM validates PIN.
+----------------------------------------
+Sentence : ATM asks ¡°Which operation do you want to perform?¡±
+There are no dobj in 5 parses
+===========================================================================
+Number 1 parse has dobj.
+Sentence : ATM asks amount to withdraw.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : ATM requires account number to withdraw.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : ATM displays the amount which a user entered.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : ATM asks if the user wants a receipt.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : If ¡®yes¡¯ is chosen, ATM prints a receipt.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : I want to set x as 5.
+----------------------------------------
+Sentence : I want to confirm that x is same with y.
+There are no dobj in 5 parses
+===========================================================================
+Number 1 parse has dobj.
+Sentence : The system checks repeatedly the passwords of documents.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : He likes hiking with friends.
+----------------------------------------

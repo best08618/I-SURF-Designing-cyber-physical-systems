@@ -1,26 +1,39 @@
 package edu.stanford.nlp.parser.lexparser.demo;
 
-public class Action {
+import java.util.Vector;
+
+public class Action { // state class
 	Noun subj;
-	Verb prod;
-	Noun[] dobjarr;
-	String[] modarr;
-	int dobCount;
+	Verb pred;
+	Vector<Noun> dobjarr;
+	Vector<Modifier> modarr;
+	int dobjIdx;
+	int modIdx;
+
 	public Action() {
-		this.subj=new Noun();
-		this.prod = new Verb();
-		this.dobjarr = new Noun[10];
-		this.dobCount=0;
+		this.subj = new Noun();
+		this.pred = new Verb();
+		this.dobjarr = new Vector<Noun>();
+		this.modarr = new Vector<Modifier>();
+		this.dobjIdx = 0;
+		this.modIdx = 0;
 	}
-	public void setSubj(Noun subj)
-	{
-		this.subj = subj;
+
+	public void setSubj(Noun s) {
+		this.subj = s;
 	}
-	public void setDobj(Noun dobj)
-	{
-	
-		this.dobjarr[dobCount]= dobj;
-		this.dobCount ++;
+
+	public void setVerb(Verb v) {
+		this.pred = v;
 	}
-	
+
+	public void setDobj(Noun dobj) {
+		this.dobjarr.add(dobj);
+
+	}
+
+	public void setModifier(Modifier mod) {
+		this.modarr.add(mod);
+	}
+
 }
