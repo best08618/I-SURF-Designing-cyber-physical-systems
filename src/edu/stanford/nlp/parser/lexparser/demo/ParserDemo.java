@@ -254,7 +254,7 @@ class ParserDemo {
 		// including applicable taxes and shipping charges.";
 		// String sent2 = "The system will provide the user with a tracking ID for the
 		// order.";
-		String sent2 = "The system prints the value which user entered and the account number.";
+		String sent2 = "The system prints the number which user entered.";
 		// String sent2 = "The system repeatedly checks passwords of documents";
 
 		TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
@@ -318,6 +318,7 @@ class ParserDemo {
 					mod.setName(rel_clause);
 					mod.setRelation("which");
 					mod.setante(ante);
+					mod.setGovIdx("");
 					act.setModifier(mod);
 					sub_flag = 1; // flag check _ if we deal the file then we have to change it as iteral and
 									// itialize it.
@@ -343,7 +344,41 @@ class ParserDemo {
 				mod.setRelation(extractElement);
 				act.setModifier(mod);
 
-			} else if (extractElement.equals("nsubj")) {
+			}
+
+			else if (extractElement.equals("nsubj")) {
+
+				if (sub_flag == 1) {
+					String rel_gov = "";
+					String rel_dep = "";
+					String rel_verb = "";
+					String rel_nsubj = "";
+					for (int j = 0; j < final_tdl.size(); j++) {
+						String extractlabel = final_tdl.get(j).reln().toString();
+						if (extractlabel.equals("acl:relcl")) {
+							rel_gov = final_tdl.get(j).gov().originalText().toLowerCase();
+							rel_dep = final_tdl.get(j).dep().originalText().toLowerCase();
+							break;
+						}
+					}
+					String current_verb = final_tdl.get(i).gov().originalText().toLowerCase();
+					String current_nsbj = final_tdl.get(i).dep().originalText().toLowerCase();
+
+					if (current_verb.equals(rel_dep)) {
+						if (current_nsbj.equals(rel_gov)) { // current subject is antecedent
+							rel_verb = current_verb;
+							System.out.println("Verb in relative clause " + rel_verb);
+
+						} else { // current nsubj is not antecedent
+							// System.out.println("This is relative nsbj and verb in relative clause");
+							rel_nsubj = current_nsbj;
+							rel_verb = current_verb;
+							//System.out.println("Rel nsbj: " + rel_nsubj + " rel verb: " + rel_verb);
+						}
+						continue;
+					}
+				}
+
 				Noun subj = new Noun();
 				subj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 				subj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
@@ -379,12 +414,12 @@ class ParserDemo {
 						if (current_dobj.equals(rel_gov)) // this dobj is antecedent
 						{
 							rel_verb = current_verb; // only verb extraction
-							//System.out.println("Verb in relative clause: " + rel_verb);
+							// System.out.println("Verb in relative clause: " + rel_verb);
 							// 나중에 relative verb 처리 할 코드 넣기
 						} else {
 							rel_dobj = current_dobj;
 							rel_verb = current_verb;
-							//System.out.println("Rel obj: " + rel_dobj + " rel verb: " + rel_verb);
+							System.out.println("Rel obj: " + rel_dobj + " rel verb: " + rel_verb);
 						}
 						continue;
 					}
@@ -397,7 +432,6 @@ class ParserDemo {
 				pred.setName(final_tdl.get(i).gov().originalText().toLowerCase());
 				pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				act.setVerb(pred);
-
 			}
 
 			else if (extractElement.contains("nmod")) {
@@ -419,17 +453,17 @@ class ParserDemo {
 
 		System.out.println(" Subject : " + act.subj.name);
 		System.out.println(" Verb : " + act.pred.name);
-		
-		
+
 		for (int i = 0; i < act.modarr.size(); i++) {
 			for (int j = 0; j < act.dobjarr.size(); j++) {
-				if (sub_flag == 1 ) {
-					if(act.dobjarr.get(j).name.equals(act.modarr.get(i).ante)) {
+				if (sub_flag == 1) {
+					if (act.dobjarr.get(j).name.equals(act.modarr.get(i).ante)) {
 						act.dobjarr.get(j).modarr.add(act.modarr.get(i));
 						act.modarr.remove(i);
 						continue;
 					}
 				}
+
 				if (act.modarr.get(i).govIdx.equals(act.dobjarr.get(j).depIdx)) {
 					act.dobjarr.get(j).modarr.add(act.modarr.get(i));
 					act.modarr.remove(i);
