@@ -51,7 +51,7 @@ class ParserDemo {
 			parserModel = args[0];
 		}
 		LexicalizedParser lp = LexicalizedParser.loadModel(parserModel);
-		if (args.length == 0) {
+		if (args.length == 1) {
 			demoAPI(lp);
 		} else {
 			String textFile = "C:\\Users\\Jinhwa\\git\\I-SURF-Designing-cyber-physical-systems\\src\\edu\\stanford\\nlp\\parser\\lexparser\\demo\\input.txt";
@@ -140,6 +140,43 @@ class ParserDemo {
 			}
 
 			Action act = new Action();
+			Tree before_tree = null;
+			int sub_flag = 0;
+
+			for (Tree subTree : final_tree) {
+				if (subTree.label().value().equals("SBAR")) // If the word's label is SBAR
+				{
+
+					if (subTree.firstChild().label().value().equals("WHNP")) {
+
+						Tree antecedent = before_tree;
+						String ante = antecedent.yieldWords().stream().map(e -> e.toString())
+								.collect(Collectors.joining(" "));
+						// System.out.println("ante:" + ante);
+						Tree rel_tree = subTree;
+						ArrayList<Word> rel_list = subTree.yieldWords();
+						String rel_clause = rel_list.stream().map(e -> e.toString()).collect(Collectors.joining(" "));
+						// System.out.println("rel_phrase: "+rel_clause);
+						Modifier mod = new Modifier();
+						mod.setName(rel_clause);
+						mod.setRelation("which");
+						mod.setante(ante);
+						mod.setGovIdx("");
+						act.setModifier(mod);
+						sub_flag = 1; // flag check _ if we deal the file then we have to change it as iteral and
+										// itialize it.
+					}
+				}
+
+				/*
+				 * if(subTree.label().value().equals("PP")) //If the word's label is SBAR { //
+				 * rel_tree = subTree; ArrayList<Word> pre_list = subTree.yieldWords(); String
+				 * pre_phrase =
+				 * pre_list.stream().map(e->e.toString()).collect(Collectors.joining(" "));
+				 * System.out.println("pre_phrase: "+pre_phrase); }
+				 */
+				before_tree = subTree;
+			}
 
 			for (int i = 0; i < final_tdl.size(); i++) {
 				String extractElement = final_tdl.get(i).reln().toString();
@@ -150,7 +187,41 @@ class ParserDemo {
 					mod.setRelation(extractElement);
 					act.setModifier(mod);
 
-				} else if (extractElement.equals("nsubj")) {
+				}
+
+				else if (extractElement.equals("nsubj")) {
+
+					if (sub_flag == 1) {
+						String rel_gov = "";
+						String rel_dep = "";
+						String rel_verb = "";
+						String rel_nsubj = "";
+						for (int j = 0; j < final_tdl.size(); j++) {
+							String extractlabel = final_tdl.get(j).reln().toString();
+							if (extractlabel.equals("acl:relcl")) {
+								rel_gov = final_tdl.get(j).gov().originalText().toLowerCase();
+								rel_dep = final_tdl.get(j).dep().originalText().toLowerCase();
+								break;
+							}
+						}
+						String current_verb = final_tdl.get(i).gov().originalText().toLowerCase();
+						String current_nsbj = final_tdl.get(i).dep().originalText().toLowerCase();
+
+						if (current_verb.equals(rel_dep)) {
+							if (current_nsbj.equals(rel_gov)) { // current subject is antecedent
+								rel_verb = current_verb;
+								System.out.println("Verb in relative clause " + rel_verb);
+
+							} else { // current nsubj is not antecedent
+								// System.out.println("This is relative nsbj and verb in relative clause");
+								rel_nsubj = current_nsbj;
+								rel_verb = current_verb;
+								//System.out.println("Rel nsbj: " + rel_nsubj + " rel verb: " + rel_verb);
+							}
+							continue;
+						}
+					}
+
 					Noun subj = new Noun();
 					subj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					subj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
@@ -166,6 +237,36 @@ class ParserDemo {
 				}
 
 				else if (extractElement.equals("dobj")) {
+					if (sub_flag == 1) {
+						String rel_gov = "";
+						String rel_dep = "";
+						String rel_verb = "";
+						String rel_dobj = "";
+						for (int j = 0; j < final_tdl.size(); j++) {
+							String extractlabel = final_tdl.get(j).reln().toString();
+							if (extractlabel.equals("acl:relcl")) // acl:relcl pair extraction for comparing
+							{
+								rel_gov = final_tdl.get(j).gov().originalText().toLowerCase();
+								rel_dep = final_tdl.get(j).dep().originalText().toLowerCase();
+								break;
+							}
+						}
+						String current_verb = final_tdl.get(i).gov().originalText().toLowerCase();
+						String current_dobj = final_tdl.get(i).dep().originalText().toLowerCase();
+						if (current_verb.equals(rel_dep)) { // it means that this dobj is dobj of which clause
+							if (current_dobj.equals(rel_gov)) // this dobj is antecedent
+							{
+								rel_verb = current_verb; // only verb extraction
+								// System.out.println("Verb in relative clause: " + rel_verb);
+								// 나중에 relative verb 처리 할 코드 넣기
+							} else {
+								rel_dobj = current_dobj;
+								rel_verb = current_verb;
+								System.out.println("Rel obj: " + rel_dobj + " rel verb: " + rel_verb);
+							}
+							continue;
+						}
+					}
 					Noun dobj = new Noun();
 					Verb pred = new Verb();
 					dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
@@ -174,8 +275,9 @@ class ParserDemo {
 					pred.setName(final_tdl.get(i).gov().originalText().toLowerCase());
 					pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setVerb(pred);
+				}
 
-				} else if (extractElement.contains("nmod")) {
+				else if (extractElement.contains("nmod")) {
 					Modifier mod = new Modifier();
 					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
@@ -192,12 +294,19 @@ class ParserDemo {
 
 			}
 
-			System.out.println();
 			System.out.println(" Subject : " + act.subj.name);
 			System.out.println(" Verb : " + act.pred.name);
 
 			for (int i = 0; i < act.modarr.size(); i++) {
 				for (int j = 0; j < act.dobjarr.size(); j++) {
+					if (sub_flag == 1) {
+						if (act.dobjarr.get(j).name.equals(act.modarr.get(i).ante)) {
+							act.dobjarr.get(j).modarr.add(act.modarr.get(i));
+							act.modarr.remove(i);
+							continue;
+						}
+					}
+
 					if (act.modarr.get(i).govIdx.equals(act.dobjarr.get(j).depIdx)) {
 						act.dobjarr.get(j).modarr.add(act.modarr.get(i));
 						act.modarr.remove(i);
@@ -217,16 +326,16 @@ class ParserDemo {
 					System.out.println(" Relation name : " + act.dobjarr.get(i).modarr.get(j).relation);
 				}
 			}
-
+			
 			System.out.println();
 
 			writer.append("----------------------------------------");
 			writer.newLine();
 
-			TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
+			//TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
 			// typedDependencies -> Dependecy in TreePrint function
 			// System.out.println("printTree function \n");
-			tp.printTree(final_tree);
+			//tp.printTree(final_tree);
 		}
 		writer.close();
 	}

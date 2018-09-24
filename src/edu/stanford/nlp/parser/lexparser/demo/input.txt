@@ -18,3 +18,9 @@ I want to set x as 5.
 I want to confirm that x is same with y.
 The system checks repeatedly the passwords of documents.
 He likes hiking with friends.
+The machine checks the balance of money which has been deposited.
+Print the value which user entered on the screen.
+The machine releases the item which user choose.
+The machine calculates the change.
+The machine releases the change.
+Turn lights of the buttons on.

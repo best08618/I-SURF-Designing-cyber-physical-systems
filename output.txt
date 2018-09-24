@@ -58,3 +58,21 @@ Sentence : The system checks repeatedly the passwords of documents.
 Number 1 parse has dobj.
 Sentence : He likes hiking with friends.
 ----------------------------------------
+Number 1 parse has dobj.
+Sentence : The machine checks the balance of money which has been deposited.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : Print the value which user entered on the screen.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The machine releases the item which user choose.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The machine calculates the change.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The machine releases the change.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : Turn lights of the buttons on.
+----------------------------------------
