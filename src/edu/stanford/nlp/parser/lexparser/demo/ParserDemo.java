@@ -298,18 +298,18 @@ class ParserDemo {
 			System.out.println(" Verb : " + act.pred.name);
 			Action imm = new Action();
 			imm = act;
-			for (int i = 0; i < act.modarr.size(); i++) {
-				for (int j = 0; j < act.dobjarr.size(); j++) {
+			for (int i = 0; i < imm.modarr.size(); i++) {
+				for (int j = 0; j < imm.dobjarr.size(); j++) {
 					if (sub_flag == 1) {
-						if (act.dobjarr.get(j).name.equals(act.modarr.get(i).ante)) {
-							act.dobjarr.get(j).modarr.add(act.modarr.get(i));
+						if (imm.dobjarr.get(j).name.equals(imm.modarr.get(i).ante)) {
+							imm.dobjarr.get(j).modarr.add(imm.modarr.get(i));
 							act.modarr.remove(i);
 							continue;
 						}
 					}
 
-					if (act.modarr.get(i).govIdx.equals(act.dobjarr.get(j).depIdx)) {
-						act.dobjarr.get(j).modarr.add(act.modarr.get(i));
+					if (imm.modarr.get(i).govIdx.equals(imm.dobjarr.get(j).depIdx)) {
+						imm.dobjarr.get(j).modarr.add(imm.modarr.get(i));
 						act.modarr.remove(i);
 					}
 				}
