@@ -51,7 +51,7 @@ class ParserDemo {
 			parserModel = args[0];
 		}
 		LexicalizedParser lp = LexicalizedParser.loadModel(parserModel);
-		if (args.length == 1) {
+		if (args.length == 0) {
 			demoAPI(lp);
 		} else {
 			String textFile = "C:\\Users\\Jinhwa\\git\\I-SURF-Designing-cyber-physical-systems\\src\\edu\\stanford\\nlp\\parser\\lexparser\\demo\\input.txt";
@@ -296,7 +296,8 @@ class ParserDemo {
 
 			System.out.println(" Subject : " + act.subj.name);
 			System.out.println(" Verb : " + act.pred.name);
-
+			Action imm = new Action();
+			imm = act;
 			for (int i = 0; i < act.modarr.size(); i++) {
 				for (int j = 0; j < act.dobjarr.size(); j++) {
 					if (sub_flag == 1) {
@@ -361,9 +362,9 @@ class ParserDemo {
 
 		// String sent2 = "The user will present the amount that the order will cost,
 		// including applicable taxes and shipping charges.";
-		// String sent2 = "The system will provide the user with a tracking ID for the
+		// String  = "The system will provide the user with a tracking ID for the
 		// order.";
-		String sent2 = "The system prints the number which user entered.";
+		String sent2 = "The system prints user account and the number which user entered.";
 		// String sent2 = "The system repeatedly checks passwords of documents";
 
 		TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
@@ -562,19 +563,20 @@ class ParserDemo {
 
 		System.out.println(" Subject : " + act.subj.name);
 		System.out.println(" Verb : " + act.pred.name);
-
-		for (int i = 0; i < act.modarr.size(); i++) {
-			for (int j = 0; j < act.dobjarr.size(); j++) {
+		Action imm = new Action();
+		imm = act; 
+		for (int i = 0; i < imm.modarr.size(); i++) {
+			for (int j = 0; j < imm.dobjarr.size(); j++) {
 				if (sub_flag == 1) {
-					if (act.dobjarr.get(j).name.equals(act.modarr.get(i).ante)) {
-						act.dobjarr.get(j).modarr.add(act.modarr.get(i));
+					if (imm.dobjarr.get(j).name.equals(imm.modarr.get(i).ante)) {
+						imm.dobjarr.get(j).modarr.add(imm.modarr.get(i));
 						act.modarr.remove(i);
 						continue;
 					}
 				}
 
-				if (act.modarr.get(i).govIdx.equals(act.dobjarr.get(j).depIdx)) {
-					act.dobjarr.get(j).modarr.add(act.modarr.get(i));
+				if (imm.modarr.get(i).govIdx.equals(imm.dobjarr.get(j).depIdx)) {
+					imm.dobjarr.get(j).modarr.add(imm.modarr.get(i));
 					act.modarr.remove(i);
 				}
 			}
