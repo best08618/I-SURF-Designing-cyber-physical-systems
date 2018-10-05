@@ -1,19 +1,16 @@
 User inserts ATM card.
 User enters PIN.
-User chooses ¡®CASH¡¯.
+User chooses 'CASH'.
 User enters amount.
 User enters account number.
-User checks the amount and chooses between ¡®yes¡¯ or ¡®no¡¯.
-User chooses between ¡®yes¡¯ or ¡®no¡¯.
 ATM reads the information of the card.
-ATM requires the user¡¯s PIN.
+ATM requires the user's PIN.
 ATM validates PIN.
-ATM asks ¡°Which operation do you want to perform?¡±
+ATM asks "Which operation do you want to perform?"
 ATM asks amount to withdraw.
 ATM requires account number to withdraw.
 ATM displays the amount which a user entered.
 ATM asks if the user wants a receipt.
-If ¡®yes¡¯ is chosen, ATM prints a receipt.
 I want to set x as 5.
 I want to confirm that x is same with y.
 The system checks repeatedly the passwords of documents.

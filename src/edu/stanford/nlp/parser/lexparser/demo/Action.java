@@ -7,16 +7,12 @@ public class Action { // state class
 	Verb pred;
 	Vector<Noun> dobjarr;
 	Vector<Modifier> modarr;
-	int dobjIdx;
-	int modIdx;
 
 	public Action() {
 		this.subj = new Noun();
 		this.pred = new Verb();
 		this.dobjarr = new Vector<Noun>();
 		this.modarr = new Vector<Modifier>();
-		this.dobjIdx = 0;
-		this.modIdx = 0;
 	}
 
 	public void setSubj(Noun s) {

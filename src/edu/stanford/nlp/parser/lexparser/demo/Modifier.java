@@ -5,6 +5,7 @@ public class Modifier {
 	String ante;
 	String relation;
 	String govIdx;
+	String depIdx;
 
 	public Modifier() {
 		this.name = "";
@@ -27,4 +28,9 @@ public class Modifier {
 	public void setGovIdx(String idx) {
 		this.govIdx = idx;
 	}
+	
+	public void setDepIdx(String idx) {
+		this.depIdx = idx;
+	}
 }
+
