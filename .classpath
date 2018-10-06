@@ -2,30 +2,25 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/ejml-0.23.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/javax.json.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/javax.json-api-1.0-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/joda-time.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/joda-time-2.9-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/jollyday.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/jollyday-0.4.9-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/protobuf.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/slf4j-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/slf4j-api-1.7.12-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/slf4j-simple.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-corenlp-3.9.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-corenlp-3.9.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-corenlp-3.9.1-models.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-corenlp-3.9.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-corenlp-models-current.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-english-corenlp-2018-02-27-models.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-openie-models.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-openie-models-3.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-parser.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-parser-3.9.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-parser-3.9.1-models.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/stanford-parser-3.9.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/xom.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jinhwa/Desktop/I-SURF project whole file/code jar files/xom-1.2.10-src.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/slf4j-api-1.7.12-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/stanford-parser-3.9.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/stanford-parser-3.9.1-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/stanford-parser.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-openie.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-openie-models.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-english-corenlp-2018-02-27-models.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1-models.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/slf4j-simple.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/protobuf.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-openie-3.6.0.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger-3.9.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger-3.9.1-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger-3.9.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

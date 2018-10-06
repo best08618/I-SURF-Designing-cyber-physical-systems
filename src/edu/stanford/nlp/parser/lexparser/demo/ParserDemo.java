@@ -51,10 +51,10 @@ class ParserDemo {
 			parserModel = args[0];
 		}
 		LexicalizedParser lp = LexicalizedParser.loadModel(parserModel);
-		if (args.length == 0) {
+		if (args.length == 1) {
 			demoAPI(lp);
 		} else {
-			String textFile = "C:\\Users\\Jinhwa\\git\\I-SURF-Designing-cyber-physical-systems\\src\\edu\\stanford\\nlp\\parser\\lexparser\\demo\\input.txt";
+			String textFile = "/Users/zoey/git/I-SURF-Designing-cyber-physical-systems/src/edu/stanford/nlp/parser/lexparser/demo/input.txt";
 			demoDP(lp, textFile);
 		}
 	}
@@ -139,6 +139,11 @@ class ParserDemo {
 				continue;
 			}
 
+			TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
+			// typedDependencies -> Dependecy in TreePrint function
+			// System.out.println("printTree function \n");
+			tp.printTree(final_tree);
+
 			Action act = new Action();
 			Tree before_tree = null;
 			int sub_flag = 0;
@@ -206,7 +211,7 @@ class ParserDemo {
 								// System.out.println("This is relative nsbj and verb in relative clause");
 								rel_nsubj = current_nsbj;
 								rel_verb = current_verb;
-								//System.out.println("Rel nsbj: " + rel_nsubj + " rel verb: " + rel_verb);
+								// System.out.println("Rel nsbj: " + rel_nsubj + " rel verb: " + rel_verb);
 							}
 							continue;
 						}
@@ -216,8 +221,7 @@ class ParserDemo {
 					subj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					subj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setSubj(subj);
-				}
-				else if (extractElement.equals("dobj")) {
+				} else if (extractElement.equals("dobj")) {
 					if (sub_flag == 1) {
 						String rel_gov = "";
 						String rel_dep = "";
@@ -252,19 +256,96 @@ class ParserDemo {
 					dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setDobj(dobj);
-				}
-				else if (extractElement.equals("root")) {
+				} else if (extractElement.equals("root")) {
 					Verb pred = new Verb();
 					pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setVerb(pred);
 				}
 			}
-			
-			
+
+			for (int i = 0; i < final_tdl.size(); i++) {
+				String extractElement = final_tdl.get(i).reln().toString();
+				if (extractElement.contains("compound")) {
+					String particle = "";
+					String name = "";
+					Modifier mod = new Modifier();
+					particle = extractElement.substring(8);
+
+					if (particle.equals(":prt")) {
+						name = final_tdl.get(i).gov().originalText().toLowerCase() + "-"
+								+ final_tdl.get(i).dep().originalText().toLowerCase();
+						if (act.pred.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+							act.pred.setName(name);
+						} else {
+							mod.setName(name);
+							mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+							mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+							mod.setRelation(extractElement);
+							act.setModifier(mod);
+						}
+
+					}
+
+					else {
+						name = final_tdl.get(i).dep().originalText().toLowerCase();
+						mod.setName(name);
+						mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+						mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+						mod.setRelation(extractElement);
+
+						if (act.pred.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+							act.setModifier(mod);
+						} else {
+							for (int dIdx = 0; dIdx < act.dobjarr.size(); dIdx++) {
+								if (act.dobjarr.get(dIdx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+									act.dobjarr.get(dIdx).setModifier(mod);
+								}
+							}
+						}
+					}
+				}
+
+				else if (extractElement.equals("advmod") || extractElement.contains("nmod")
+						|| extractElement.equals("amod")) {
+					Modifier mod = new Modifier();
+					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+					mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+					mod.setRelation(extractElement);
+					if (act.pred.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+						act.setModifier(mod);
+					} else {
+						for (int dIdx = 0; dIdx < act.dobjarr.size(); dIdx++) {
+							if (act.dobjarr.get(dIdx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+								act.dobjarr.get(dIdx).setModifier(mod);
+							}
+						}
+					}
+				}
+
+				/*
+				 * else { if (act.pred.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())){
+				 * Modifier mod = new Modifier();
+				 * mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				 * mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				 * mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+				 * mod.setRelation(extractElement); act.setModifier(mod);
+				 * System.out.println("same with verb index"); } else { for (int dIdx = 0; dIdx
+				 * < act.dobjarr.size(); dIdx++) { if
+				 * (act.dobjarr.get(dIdx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+				 * Modifier mod = new Modifier();
+				 * mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				 * mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				 * mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+				 * mod.setRelation(extractElement); act.dobjarr.get(dIdx).setModifier(mod); } }
+				 * }
+				 */
+			}
 
 			System.out.println(" Subject : " + act.subj.name);
 			System.out.println(" Verb : " + act.pred.name);
+
 			Action imm = new Action();
 			imm = act;
 			for (int i = 0; i < imm.modarr.size(); i++) {
@@ -276,11 +357,10 @@ class ParserDemo {
 							continue;
 						}
 					}
-
-					if (imm.modarr.get(i).govIdx.equals(imm.dobjarr.get(j).depIdx)) {
-						imm.dobjarr.get(j).modarr.add(imm.modarr.get(i));
-						act.modarr.remove(i);
-					}
+					/*
+					 * if (imm.modarr.get(i).govIdx.equals(imm.dobjarr.get(j).depIdx)) {
+					 * imm.dobjarr.get(j).modarr.add(imm.modarr.get(i)); act.modarr.remove(i); }
+					 */
 				}
 			}
 
@@ -296,16 +376,16 @@ class ParserDemo {
 					System.out.println(" Relation name : " + act.dobjarr.get(i).modarr.get(j).relation);
 				}
 			}
-			
+
 			System.out.println();
 
 			writer.append("----------------------------------------");
 			writer.newLine();
 
-			//TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
+			// TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
 			// typedDependencies -> Dependecy in TreePrint function
 			// System.out.println("printTree function \n");
-			//tp.printTree(final_tree);
+			// tp.printTree(final_tree);
 		}
 		writer.close();
 	}
@@ -331,7 +411,7 @@ class ParserDemo {
 
 		// String sent2 = "The user will present the amount that the order will cost,
 		// including applicable taxes and shipping charges.";
-		// String  = "The system will provide the user with a tracking ID for the
+		// String = "The system will provide the user with a tracking ID for the
 		// order.";
 		String sent2 = "The system prints user account and the number which user entered.";
 		// String sent2 = "The system repeatedly checks passwords of documents";
@@ -443,7 +523,7 @@ class ParserDemo {
 							// System.out.println("This is relative nsbj and verb in relative clause");
 							rel_nsubj = current_nsbj;
 							rel_verb = current_verb;
-							//System.out.println("Rel nsbj: " + rel_nsubj + " rel verb: " + rel_verb);
+							// System.out.println("Rel nsbj: " + rel_nsubj + " rel verb: " + rel_verb);
 						}
 						continue;
 					}
@@ -490,8 +570,7 @@ class ParserDemo {
 				dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 				dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				act.setDobj(dobj);
-			}
-			else if (extractElement.equals("root")) {
+			} else if (extractElement.equals("root")) {
 				Verb pred = new Verb();
 				pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 				pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
@@ -506,8 +585,7 @@ class ParserDemo {
 				if (particle.equals(":prt")) {
 					name = final_tdl.get(i).gov().originalText().toLowerCase() + "-"
 							+ final_tdl.get(i).dep().originalText().toLowerCase();
-				}
-				else {
+				} else {
 					name = final_tdl.get(i).dep().originalText().toLowerCase();
 				}
 				mod.setName(name);
@@ -531,7 +609,7 @@ class ParserDemo {
 		System.out.println(" Subject : " + act.subj.name);
 		System.out.println(" Verb : " + act.pred.name);
 		Action imm = new Action();
-		imm = act; 
+		imm = act;
 		for (int i = 0; i < imm.modarr.size(); i++) {
 			for (int j = 0; j < imm.dobjarr.size(); j++) {
 				if (sub_flag == 1) {
