@@ -180,17 +180,7 @@ class ParserDemo {
 
 			for (int i = 0; i < final_tdl.size(); i++) {
 				String extractElement = final_tdl.get(i).reln().toString();
-				if (extractElement.contains("compound")) {
-					Modifier mod = new Modifier();
-					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-					mod.setRelation(extractElement);
-					act.setModifier(mod);
-
-				}
-
-				else if (extractElement.equals("nsubj")) {
-
+				if (extractElement.equals("nsubj")) {
 					if (sub_flag == 1) {
 						String rel_gov = "";
 						String rel_dep = "";
@@ -227,15 +217,6 @@ class ParserDemo {
 					subj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setSubj(subj);
 				}
-
-				else if (extractElement.equals("advmod")) {
-					Modifier mod = new Modifier();
-					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-					mod.setRelation(extractElement);
-					act.setModifier(mod);
-				}
-
 				else if (extractElement.equals("dobj")) {
 					if (sub_flag == 1) {
 						String rel_gov = "";
@@ -258,7 +239,7 @@ class ParserDemo {
 							{
 								rel_verb = current_verb; // only verb extraction
 								// System.out.println("Verb in relative clause: " + rel_verb);
-								// ³ªÁß¿¡ relative verb Ã³¸® ÇÒ ÄÚµå ³Ö±â
+								// ï¿½ï¿½ï¿½ß¿ï¿½ relative verb Ã³ï¿½ï¿½ ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Ö±ï¿½
 							} else {
 								rel_dobj = current_dobj;
 								rel_verb = current_verb;
@@ -268,31 +249,19 @@ class ParserDemo {
 						}
 					}
 					Noun dobj = new Noun();
-					Verb pred = new Verb();
 					dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setDobj(dobj);
-					pred.setName(final_tdl.get(i).gov().originalText().toLowerCase());
+				}
+				else if (extractElement.equals("root")) {
+					Verb pred = new Verb();
+					pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setVerb(pred);
 				}
-
-				else if (extractElement.contains("nmod")) {
-					Modifier mod = new Modifier();
-					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-					mod.setRelation(extractElement);
-					act.setModifier(mod);
-
-				} else if (extractElement.equals("amod")) {
-					Modifier mod = new Modifier();
-					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-					mod.setRelation(extractElement);
-					act.setModifier(mod);
-				}
-
 			}
+			
+			
 
 			System.out.println(" Subject : " + act.subj.name);
 			System.out.println(" Verb : " + act.pred.name);
@@ -447,16 +416,7 @@ class ParserDemo {
 
 		for (int i = 0; i < final_tdl.size(); i++) {
 			String extractElement = final_tdl.get(i).reln().toString();
-			if (extractElement.contains("compound")) {
-				Modifier mod = new Modifier();
-				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-				mod.setRelation(extractElement);
-				act.setModifier(mod);
-
-			}
-
-			else if (extractElement.equals("nsubj")) {
+			if (extractElement.equals("nsubj")) {
 
 				if (sub_flag == 1) {
 					String rel_gov = "";
@@ -495,14 +455,6 @@ class ParserDemo {
 				act.setSubj(subj);
 			}
 
-			else if (extractElement.equals("advmod")) {
-				Modifier mod = new Modifier();
-				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-				mod.setRelation(extractElement);
-				act.setModifier(mod);
-			}
-
 			else if (extractElement.equals("dobj")) {
 				if (sub_flag == 1) {
 					String rel_gov = "";
@@ -525,7 +477,7 @@ class ParserDemo {
 						{
 							rel_verb = current_verb; // only verb extraction
 							// System.out.println("Verb in relative clause: " + rel_verb);
-							// ³ªÁß¿¡ relative verb Ã³¸® ÇÒ ÄÚµå ³Ö±â
+							// ï¿½ï¿½ï¿½ß¿ï¿½ relative verb Ã³ï¿½ï¿½ ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Ö±ï¿½
 						} else {
 							rel_dobj = current_dobj;
 							rel_verb = current_verb;
@@ -535,30 +487,45 @@ class ParserDemo {
 					}
 				}
 				Noun dobj = new Noun();
-				Verb pred = new Verb();
 				dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 				dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				act.setDobj(dobj);
-				pred.setName(final_tdl.get(i).gov().originalText().toLowerCase());
+			}
+			else if (extractElement.equals("root")) {
+				Verb pred = new Verb();
+				pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 				pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				act.setVerb(pred);
 			}
 
-			else if (extractElement.contains("nmod")) {
+			else if (extractElement.contains("compound")) {
+				String particle = "";
+				String name = "";
 				Modifier mod = new Modifier();
-				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				particle = extractElement.substring(8);
+				if (particle.equals(":prt")) {
+					name = final_tdl.get(i).gov().originalText().toLowerCase() + "-"
+							+ final_tdl.get(i).dep().originalText().toLowerCase();
+				}
+				else {
+					name = final_tdl.get(i).dep().originalText().toLowerCase();
+				}
+				mod.setName(name);
 				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-				mod.setRelation(extractElement);
-				act.setModifier(mod);
-
-			} else if (extractElement.equals("amod")) {
-				Modifier mod = new Modifier();
-				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				mod.setRelation(extractElement);
 				act.setModifier(mod);
 			}
 
+			else if (extractElement.equals("advmod") || extractElement.contains("nmod")
+					|| extractElement.equals("amod")) {
+				Modifier mod = new Modifier();
+				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+				mod.setRelation(extractElement);
+				act.setModifier(mod);
+			}
 		}
 
 		System.out.println(" Subject : " + act.subj.name);

@@ -6,13 +6,11 @@ public class Noun {
 	String name;
 	Vector<Modifier> modarr;
 	String depIdx;
-	int modIdx;
 
 	public Noun() {
 		this.name = "";
 		this.modarr = new Vector<Modifier>();
 		this.depIdx = "";
-		this.modIdx = 0;
 	}
 
 	public void setName(String s) {
