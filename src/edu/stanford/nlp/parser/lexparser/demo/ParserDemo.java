@@ -30,7 +30,6 @@ import edu.stanford.nlp.trees.TypedDependency;
 import edu.stanford.nlp.util.ScoredObject;
 
 class ParserDemo {
-
 	/**
 	 * The main method demonstrates the easiest way to load a parser. Simply call
 	 * loadModel and specify the path of a serialized grammar model, which can be a
@@ -145,29 +144,27 @@ class ParserDemo {
 			tp.printTree(final_tree);
 
 			Action act = new Action();
-			Tree before_tree = null;
+			//Tree before_tree = null;
 			int sub_flag = 0;
+			String rel_clause = "";
 
 			for (Tree subTree : final_tree) {
 				if (subTree.label().value().equals("SBAR")) // If the word's label is SBAR
 				{
 
 					if (subTree.firstChild().label().value().equals("WHNP")) {
-
-						Tree antecedent = before_tree;
-						String ante = antecedent.yieldWords().stream().map(e -> e.toString())
-								.collect(Collectors.joining(" "));
-						// System.out.println("ante:" + ante);
-						Tree rel_tree = subTree;
+						//Tree antecedent = before_tree;
+						//String ante = antecedent.yieldWords().stream().map(e -> e.toString()).collect(Collectors.joining(" "));
+						//System.out.println("ante:" + ante);
+						//Tree rel_tree = subTree;
 						ArrayList<Word> rel_list = subTree.yieldWords();
-						String rel_clause = rel_list.stream().map(e -> e.toString()).collect(Collectors.joining(" "));
+						rel_clause = rel_list.stream().map(e -> e.toString()).collect(Collectors.joining(" "));
 						// System.out.println("rel_phrase: "+rel_clause);
-						Modifier mod = new Modifier();
-						mod.setName(rel_clause);
-						mod.setRelation("which");
-						mod.setante(ante);
-						mod.setGovIdx("");
-						act.setModifier(mod);
+						//Modifier mod = new Modifier();
+						//mod.setName(rel_clause);
+						//mod.setRelation("which");
+						//mod.setante(ante);
+						//act.setModifier(mod);
 						sub_flag = 1; // flag check _ if we deal the file then we have to change it as iteral and
 										// itialize it.
 					}
@@ -180,7 +177,7 @@ class ParserDemo {
 				 * pre_list.stream().map(e->e.toString()).collect(Collectors.joining(" "));
 				 * System.out.println("pre_phrase: "+pre_phrase); }
 				 */
-				before_tree = subTree;
+				//before_tree = subTree;
 			}
 
 			for (int i = 0; i < final_tdl.size(); i++) {
@@ -255,6 +252,7 @@ class ParserDemo {
 					Noun dobj = new Noun();
 					dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+					dobj.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 					act.setDobj(dobj);
 				} else if (extractElement.equals("root")) {
 					Verb pred = new Verb();
@@ -263,6 +261,8 @@ class ParserDemo {
 					act.setVerb(pred);
 				}
 			}
+			
+			boolean hasChain = false;
 
 			for (int i = 0; i < final_tdl.size(); i++) {
 				String extractElement = final_tdl.get(i).reln().toString();
@@ -284,7 +284,6 @@ class ParserDemo {
 							mod.setRelation(extractElement);
 							act.setModifier(mod);
 						}
-
 					}
 
 					else {
@@ -293,21 +292,28 @@ class ParserDemo {
 						mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 						mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 						mod.setRelation(extractElement);
-
+						
 						if (act.pred.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
 							act.setModifier(mod);
-						} else {
+						} 
+						else {
+							boolean isModifyingDobj = false;
 							for (int dIdx = 0; dIdx < act.dobjarr.size(); dIdx++) {
 								if (act.dobjarr.get(dIdx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
 									act.dobjarr.get(dIdx).setModifier(mod);
+									isModifyingDobj = true;
+									break;
 								}
+							}
+							if(!isModifyingDobj) {
+								hasChain  = true;
 							}
 						}
 					}
 				}
 
 				else if (extractElement.equals("advmod") || extractElement.contains("nmod")
-						|| extractElement.equals("amod")) {
+						|| extractElement.equals("amod"))  {
 					Modifier mod = new Modifier();
 					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
@@ -315,7 +321,9 @@ class ParserDemo {
 					mod.setRelation(extractElement);
 					if (act.pred.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
 						act.setModifier(mod);
-					} else {
+						
+					}
+					else {
 						for (int dIdx = 0; dIdx < act.dobjarr.size(); dIdx++) {
 							if (act.dobjarr.get(dIdx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
 								act.dobjarr.get(dIdx).setModifier(mod);
@@ -323,47 +331,61 @@ class ParserDemo {
 						}
 					}
 				}
-
-				/*
-				 * else { if (act.pred.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())){
-				 * Modifier mod = new Modifier();
-				 * mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-				 * mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-				 * mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
-				 * mod.setRelation(extractElement); act.setModifier(mod);
-				 * System.out.println("same with verb index"); } else { for (int dIdx = 0; dIdx
-				 * < act.dobjarr.size(); dIdx++) { if
-				 * (act.dobjarr.get(dIdx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
-				 * Modifier mod = new Modifier();
-				 * mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
-				 * mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
-				 * mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
-				 * mod.setRelation(extractElement); act.dobjarr.get(dIdx).setModifier(mod); } }
-				 * }
-				 */
+				
+				if (sub_flag == 1){
+					boolean isModifierOfDobj = false;
+					if (extractElement.equals("ref")) {
+						Modifier mod = new Modifier();
+						mod.setName(rel_clause);
+						mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+						mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+						mod.setRelation(extractElement);
+						for (int idx = 0; idx < act.dobjarr.size(); idx++) {
+							if (act.dobjarr.get(idx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+								act.dobjarr.get(idx).setModifier(mod);
+								isModifierOfDobj = true;
+								break;
+							}
+						}
+						if(!isModifierOfDobj) {
+							act.setModifier(mod);
+						}
+					}
+				}
+				
+				
+				
 			}
 
 			System.out.println(" Subject : " + act.subj.name);
 			System.out.println(" Verb : " + act.pred.name);
-
+			
+			/*
 			Action imm = new Action();
-			imm = act;
+			imm = act;  
+		
 			for (int i = 0; i < imm.modarr.size(); i++) {
 				for (int j = 0; j < imm.dobjarr.size(); j++) {
 					if (sub_flag == 1) {
 						if (imm.dobjarr.get(j).name.equals(imm.modarr.get(i).ante)) {
-							imm.dobjarr.get(j).modarr.add(imm.modarr.get(i));
+							act.dobjarr.get(j).modarr.add(act.modarr.get(i));
 							act.modarr.remove(i);
 							continue;
 						}
 					}
-					/*
-					 * if (imm.modarr.get(i).govIdx.equals(imm.dobjarr.get(j).depIdx)) {
-					 * imm.dobjarr.get(j).modarr.add(imm.modarr.get(i)); act.modarr.remove(i); }
-					 */
 				}
 			}
-
+			*/
+			
+			/*
+			if (hasChain) {
+				for (int i = 0; i < act.dobjarr.size(); i++) {
+					for (int j = 0; j < act.dobjarr.get(i).modarr.size(); j++) {
+						//따로 벡터 만들어서 걔네 끼리 돌리는 게 효율적일듯 하나하나 다 검사는 에
+					}
+				}
+			}*/
+	
 			for (int i = 0; i < act.modarr.size(); i++) {
 				System.out.println(" Modifier of Verb : " + act.modarr.get(i).name);
 				System.out.println(" Relation name : " + act.modarr.get(i).relation);

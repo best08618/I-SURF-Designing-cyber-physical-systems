@@ -95,3 +95,12 @@ The Applicant asks for a set of forms.
 The message will occur after the time a.
 The message will occur before the time b.
 The messages m1 and m2 start at the same time.
+I bought a white bird with yellow feet.
+The kiosk at the corner sells magazines.
+The boy in the blue shirt is my little brother.
+The book on that shelf is old and worn.
+It annoys me when babies cry during church services.
+I will meet you after work.
+The moon rose over the ocean.
+The dishes in the sink need to be washed.
+The man on the plane is my uncle Bob.

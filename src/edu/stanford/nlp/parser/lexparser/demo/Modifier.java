@@ -1,11 +1,14 @@
 package edu.stanford.nlp.parser.lexparser.demo;
 
+import java.util.Vector;
+
 public class Modifier {
 	String name;
 	String ante;
 	String relation;
 	String govIdx;
 	String depIdx;
+	Vector<Modifier> modarr;
 
 	public Modifier() {
 		this.name = "";
@@ -31,6 +34,10 @@ public class Modifier {
 	
 	public void setDepIdx(String idx) {
 		this.depIdx = idx;
+	}
+	
+	public void setModifier (Modifier mod) {
+		this.modarr.add(mod);
 	}
 }
 

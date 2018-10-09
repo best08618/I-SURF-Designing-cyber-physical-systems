@@ -291,3 +291,30 @@ Sentence : The message will occur before the time b.
 Sentence : The messages m1 and m2 start at the same time.
 There are no dobj in 5 parses
 ===========================================================================
+Number 1 parse has dobj.
+Sentence : I bought a white bird with yellow feet.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The kiosk at the corner sells magazines.
+----------------------------------------
+Sentence : The boy in the blue shirt is my little brother.
+There are no dobj in 5 parses
+===========================================================================
+Sentence : The book on that shelf is old and worn.
+There are no dobj in 5 parses
+===========================================================================
+Number 1 parse has dobj.
+Sentence : It annoys me when babies cry during church services.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : I will meet you after work.
+----------------------------------------
+Number 2 parse has dobj.
+Sentence : The moon rose over the ocean.
+----------------------------------------
+Sentence : The dishes in the sink need to be washed.
+There are no dobj in 5 parses
+===========================================================================
+Sentence : The man on the plane is my uncle Bob.
+There are no dobj in 5 parses
+===========================================================================
