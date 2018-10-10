@@ -420,7 +420,6 @@ class ParserDemo {
 		// System.out.println("printTree function \n");
 		tp.printTree(final_tree);
 
-
 		Action act = new Action();
 		int sub_flag = 0;
 		String rel_clause = "";
@@ -541,8 +540,8 @@ class ParserDemo {
 				}
 			}
 
-			else if (extractElement.equals("advmod") || extractElement.contains("nmod")
-					|| extractElement.equals("amod") || extractElement.equals("compound")) {
+			else if (extractElement.equals("advmod") || extractElement.contains("nmod") || extractElement.equals("amod")
+					|| extractElement.equals("compound")) {
 				Modifier mod = new Modifier();
 				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
 				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
@@ -571,7 +570,6 @@ class ParserDemo {
 						}
 					}
 				}
-
 				if (hasChain) {
 					mods.add(mod);
 					beforeGovIdx = final_tdl.get(i).gov().toCopyIndex();
@@ -579,26 +577,24 @@ class ParserDemo {
 			}
 
 			if (sub_flag == 1) {
-				boolean isModifierOfDobj = false;
 				if (extractElement.equals("ref")) {
 					Modifier mod = new Modifier();
 					mod.setName(rel_clause);
 					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 					mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					mod.setRelation(extractElement);
-					for (int idx = 0; idx < act.dobjarr.size(); idx++) {
-						if (act.dobjarr.get(idx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
-							act.dobjarr.get(idx).setModifier(mod);
-							isModifierOfDobj = true;
-							break;
+					if (act.subj.depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+						act.subj.setModifier(mod);
+					} else {
+						for (int idx = 0; idx < act.dobjarr.size(); idx++) {
+							if (act.dobjarr.get(idx).depIdx.equals(final_tdl.get(i).gov().toCopyIndex())) {
+								act.dobjarr.get(idx).setModifier(mod);
+								break;
+							}
 						}
-					}
-					if (!isModifierOfDobj) {
-						act.setModifier(mod);
 					}
 				}
 			}
-
 		}
 		System.out.println(" Subject : " + act.subj.name);
 		for (int i = 0; i < act.subj.modarr.size(); i++) {

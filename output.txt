@@ -318,3 +318,6 @@ There are no dobj in 5 parses
 Sentence : The man on the plane is my uncle Bob.
 There are no dobj in 5 parses
 ===========================================================================
+Number 1 parse has dobj.
+Sentence : The red one which is eating an apple is an animal.
+----------------------------------------
