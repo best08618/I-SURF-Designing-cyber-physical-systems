@@ -1,16 +1,20 @@
 User inserts ATM card.
 User enters PIN.
-User chooses 'CASH'.
+User chooses ‘CASH’.
 User enters amount.
 User enters account number.
+User checks the amount and chooses between ‘yes’ or ‘no’.
+User chooses between ‘yes’ or ‘no’.
+He turns the light on.
 ATM reads the information of the card.
-ATM requires the user's PIN.
+ATM requires the user’s PIN.
 ATM validates PIN.
-ATM asks "Which operation do you want to perform?"
+ATM asks “Which operation do you want to perform?”
 ATM asks amount to withdraw.
 ATM requires account number to withdraw.
 ATM displays the amount which a user entered.
 ATM asks if the user wants a receipt.
+If ‘yes’ is chosen, ATM prints a receipt.
 I want to set x as 5.
 I want to confirm that x is same with y.
 The system checks repeatedly the passwords of documents.
@@ -21,3 +25,83 @@ The machine releases the item which user choose.
 The machine calculates the change.
 The machine releases the change.
 Turn lights of the buttons on.
+Turn the camera module on when the red button is pressed.
+Customer browses catalogue and selects item to by.
+Customer goes to the check out.
+Customer fills in shipping information
+System presents full pricing information
+Customer fills in credit card information
+system authorizes purchase
+System confirms sale
+System sends confirming email to customer
+The Use Case starts when the user starts the application.
+The system will display the login screen
+The user enters a username and password.
+The system will verify the information.
+The system will set access permissions.
+The system will display the main screen.
+The user will select a function.
+The system displays the Place Order Screen.
+Student inputs her name and student number.
+System verifies the student is eligible to enroll in seminars. 
+System displays list of available seminars.
+Student chooses a seminar or decides not to enroll at all.
+System validates the student is eligible to enroll in the chosen seminar. 
+System validates the seminar fits into the student's schedule.
+System calculates and displays fees
+Student verifies the cost and either indicates she wants to enroll or not.
+System enrolls the student in the seminar and bills them for it.
+The system prints enrollment receipt.
+Student provides her name and student number on the enrollment form.
+Registrar verifies the student is eligible to enroll in seminars.
+Registrar asks the student which seminar they'd like to enroll in. 
+Student chooses a seminar or decides not to enroll at all.
+Registrar checks the student record to see if student has previously passed preequisite courses. 
+Registrar validates the seminar fits into the student's schedule.
+Registrar calculates fees.
+Student verifies the cost and either indicates she wants to enroll or not.
+Registrar enrolls the student in the seminar and bills them for it.
+The Registrar writes a payment receipt.
+Student chooses a seminar to enroll in
+System checks that the student can enroll in the seminar
+System calculates fees
+Student pays fees and is enrolled.
+The use case begins when a student wants to enroll in a seminar.
+The student inputs her name and student number into the system via UI23 Security Login Screen.
+The system verifies the student is eligible to enroll in seminars at the university according to business rule BR129 Determine Eligibility to Enroll. 
+The system displays UI32 Seminar Selection Screen, which indicates the list of available seminars.
+The student indicates the seminar in which she wants to enroll. 
+The system validates the student is eligible to enroll in the seminar according to the business rule BR130 Determine Student Eligibility to Enroll in a Seminar. 
+The system validates the seminar fits into the existing schedule of the student according to the business rule BR143 Validate Student Seminar Schedule.
+The system calculates the fees for the seminar based on the fee published in the course catalog, applicable student fees, and applicable taxes. Apply business rules BR 180 Calculate Student Fees and BR45 Calculate Taxes for Seminar.
+The system displays the fees via UI33 Display Seminar Fees Screen.
+The system asks the student if she still wants to enroll in the seminar.
+The student indicates she wants to enroll in the seminar.
+The system enrolls the student in the seminar.
+The system informs the student the enrollment was successful via UI88 Seminar Enrollment Summary Screen.
+The system bills the student for the seminar, according to business rule BR100 Bill Student for Seminar.
+The system asks the student if she wants a printed statement of the enrollment.
+The student indicates she wants a printed statement.
+The system prints the enrollment statement UI89 Enrollment Summary Report.
+The use case ends when the student takes the printed statement.
+He bought some flowers to give to his wife.
+He locked the door to keep everyone out.
+She reminded me to turn the lights out.
+The Student is not eligible to Enroll in Seminars.
+The registrar informs the student he is not eligible to enroll.
+The Registrar is logged into the system.
+The registrar hands the student the receipt.
+The Applicant asks for a set of forms.
+The message will occur after the time a.
+The message will occur before the time b.
+The messages m1 and m2 start at the same time.
+I bought a white bird with yellow feet.
+The kiosk at the corner sells magazines.
+The boy in the blue shirt is my little brother.
+The book on that shelf is old and worn.
+It annoys me when babies cry during church services.
+I will meet you after work.
+The moon rose over the ocean.
+The dishes in the sink need to be washed.
+The man on the plane is my uncle Bob.
+The red one which is eating an apple is an animal.

@@ -6,6 +6,7 @@ public class Noun {
 	String name;
 	Vector<Modifier> modarr;
 	String depIdx;
+	String govIdx;
 
 	public Noun() {
 		this.name = "";
@@ -23,5 +24,9 @@ public class Noun {
 
 	public void setDepIdx(String idx) {
 		this.depIdx = idx;
+	}
+	
+	public void setGovIdx(String idx) {
+		this.govIdx = idx;
 	}
 }
