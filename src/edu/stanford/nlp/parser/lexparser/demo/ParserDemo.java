@@ -18,6 +18,7 @@ import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 import edu.stanford.nlp.process.Tokenizer;
 import edu.stanford.nlp.process.TokenizerFactory;
+import edu.stanford.nlp.simple.Sentence;
 import edu.stanford.nlp.trees.GrammaticalStructure;
 import edu.stanford.nlp.trees.GrammaticalStructureFactory;
 import edu.stanford.nlp.trees.Tree;
@@ -232,8 +233,10 @@ class ParserDemo {
 					dobj.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 					act.setDobj(dobj);
 				} else if (extractElement.equals("root")) {
+					Sentence verb = new Sentence(final_tdl.get(i).dep().originalText().toLowerCase());
+					String name = verb.lemma(0);
 					Verb pred = new Verb();
-					pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					pred.setName(name);
 					pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setVerb(pred);
 				}
@@ -508,8 +511,10 @@ class ParserDemo {
 				dobj.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 				act.setDobj(dobj);
 			} else if (extractElement.equals("root")) {
+				Sentence verb = new Sentence(final_tdl.get(i).dep().originalText().toLowerCase());
+				String name = verb.lemma(0);
 				Verb pred = new Verb();
-				pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				pred.setName(name);
 				pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				act.setVerb(pred);
 			}
