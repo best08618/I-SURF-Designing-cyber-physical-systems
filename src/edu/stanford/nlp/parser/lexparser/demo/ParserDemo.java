@@ -1,18 +1,15 @@
 package edu.stanford.nlp.parser.lexparser.demo;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
+import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
-import java.io.StringReader;
-import java.io.FileNotFoundException;
 
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.Word;
@@ -162,7 +159,7 @@ class ParserDemo {
 			for (int i = 0; i < final_tdl.size(); i++) {
 				String extractElement = final_tdl.get(i).reln().toString();
 
-				if (extractElement.equals("nsubj")) {
+				if (extractElement.contains("nsubj")) {
 
 					if (sub_flag == 1) {
 						String rel_gov = "";
@@ -320,7 +317,6 @@ class ParserDemo {
 						}
 					}
 				}
-
 			}
 
 			System.out.println(" Subject : " + act.subj.name);
