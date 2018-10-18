@@ -1,18 +1,15 @@
 package edu.stanford.nlp.parser.lexparser.demo;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
+import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
-import java.io.StringReader;
-import java.io.FileNotFoundException;
 
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.Word;
@@ -21,6 +18,7 @@ import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 import edu.stanford.nlp.process.Tokenizer;
 import edu.stanford.nlp.process.TokenizerFactory;
+import edu.stanford.nlp.simple.Sentence;
 import edu.stanford.nlp.trees.GrammaticalStructure;
 import edu.stanford.nlp.trees.GrammaticalStructureFactory;
 import edu.stanford.nlp.trees.Tree;
@@ -162,7 +160,7 @@ class ParserDemo {
 			for (int i = 0; i < final_tdl.size(); i++) {
 				String extractElement = final_tdl.get(i).reln().toString();
 
-				if (extractElement.equals("nsubj")) {
+				if (extractElement.contains("nsubj")) {
 
 					if (sub_flag == 1) {
 						String rel_gov = "";
@@ -235,8 +233,10 @@ class ParserDemo {
 					dobj.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 					act.setDobj(dobj);
 				} else if (extractElement.equals("root")) {
+					Sentence verb = new Sentence(final_tdl.get(i).dep().originalText().toLowerCase());
+					String name = verb.lemma(0);
 					Verb pred = new Verb();
-					pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					pred.setName(name);
 					pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 					act.setVerb(pred);
 				}
@@ -320,7 +320,6 @@ class ParserDemo {
 						}
 					}
 				}
-
 			}
 
 			System.out.println(" Subject : " + act.subj.name);
@@ -512,8 +511,10 @@ class ParserDemo {
 				dobj.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 				act.setDobj(dobj);
 			} else if (extractElement.equals("root")) {
+				Sentence verb = new Sentence(final_tdl.get(i).dep().originalText().toLowerCase());
+				String name = verb.lemma(0);
 				Verb pred = new Verb();
-				pred.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				pred.setName(name);
 				pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				act.setVerb(pred);
 			}

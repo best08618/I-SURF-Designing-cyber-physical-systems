@@ -1,16 +1,16 @@
 package edu.stanford.nlp.parser.lexparser.demo;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Noun {
 	String name;
-	Vector<Modifier> modarr;
+	ArrayList<Modifier> modarr;
 	String depIdx;
 	String govIdx;
 
 	public Noun() {
 		this.name = "";
-		this.modarr = new Vector<Modifier>();
+		this.modarr = new ArrayList<Modifier>();
 		this.depIdx = "";
 	}
 
@@ -30,3 +30,4 @@ public class Noun {
 		this.govIdx = idx;
 	}
 }
+

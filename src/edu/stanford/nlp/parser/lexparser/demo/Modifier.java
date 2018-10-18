@@ -1,27 +1,24 @@
 package edu.stanford.nlp.parser.lexparser.demo;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Modifier {
 	String name;
-	String ante;
 	String relation;
 	String govIdx;
 	String depIdx;
-	Vector<Modifier> modarr;
+	ArrayList<Modifier> modarr;
 
 	public Modifier() {
 		this.name = "";
 		this.relation = "";
 		this.govIdx = "";
+		this.depIdx = "";
+		this.modarr = new ArrayList<Modifier>();
 	}
 
 	public void setName(String s) {
 		this.name = s;
-	}
-	
-	public void setante(String s) {
-		this.ante = s;
 	}
 
 	public void setRelation(String s) {
