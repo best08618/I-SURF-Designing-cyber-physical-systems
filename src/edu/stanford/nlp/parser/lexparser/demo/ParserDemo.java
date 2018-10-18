@@ -8,8 +8,13 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import edu.smu.tspell.wordnet.Synset;
+import edu.smu.tspell.wordnet.SynsetType;
+import edu.smu.tspell.wordnet.VerbSynset;
+import edu.smu.tspell.wordnet.WordNetDatabase;
 
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.Word;
@@ -242,7 +247,7 @@ class ParserDemo {
 				}
 			}
 
-			Vector<Modifier> mods = new Vector<Modifier>();
+			ArrayList<Modifier> mods = new ArrayList<Modifier>();
 			String beforeGovIdx = "";
 
 			for (int i = 0; i < final_tdl.size(); i++) {
@@ -343,6 +348,18 @@ class ParserDemo {
 			}
 
 			System.out.println();
+			
+			System.setProperty("wordnet.database.dir", "/Users/zoey/Downloads/WordNet-3.0/dict");
+			VerbSynset verbSynset;
+			WordNetDatabase database = WordNetDatabase.getFileInstance();
+			Synset[] synsets = database.getSynsets(act.pred.name, SynsetType.VERB);
+			System.out.println("----------");
+			for (int i = 0; i < synsets.length; i++) {
+				verbSynset = (VerbSynset) (synsets[i]);
+				System.out.println(verbSynset.getWordForms()[0] + ": " + verbSynset.getDefinition());
+			}
+			System.out.println("----------");
+
 
 			writer.append("----------------------------------------");
 			writer.newLine();
@@ -520,7 +537,7 @@ class ParserDemo {
 			}
 		}
 
-		Vector<Modifier> mods = new Vector<Modifier>();
+		ArrayList<Modifier> mods = new ArrayList<Modifier>();
 		String beforeGovIdx = "";
 
 		for (int i = 0; i < final_tdl.size(); i++) {
