@@ -1,6 +1,17 @@
 package edu.stanford.nlp.parser.lexparser.demo;
 
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import com.google.cloud.dialogflow.v2.DetectIntentResponse;
+import com.google.cloud.dialogflow.v2.QueryInput;
+import com.google.cloud.dialogflow.v2.QueryResult;
+import com.google.cloud.dialogflow.v2.SessionName;
+import com.google.cloud.dialogflow.v2.SessionsClient;
+import com.google.cloud.dialogflow.v2.TextInput;
+import com.google.cloud.dialogflow.v2.TextInput.Builder;
 
 
 public class DetectIntentTexts {
@@ -49,7 +60,7 @@ public class DetectIntentTexts {
 	  // [START run_application]
 	  public static void main(String[] args) throws Exception {
 	    ArrayList<String> texts = new ArrayList<>();
-	    String projectId = "";
+	    String projectId = "seungwoojeong-5b90a";
 	    String sessionId = UUID.randomUUID().toString();
 	    String languageCode = "en-US";
 
@@ -96,4 +107,4 @@ public class DetectIntentTexts {
 	  // [END run_application]
 	}
 
-}
+
