@@ -1,4 +1,5 @@
 package edu.stanford.nlp.parser.lexparser.demo;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,9 +9,15 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import com.babelscape.util.UniversalPOS;
+
+import edu.mit.jwi.item.IPointer;
+import edu.mit.jwi.item.POS;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.SynsetType;
 import edu.smu.tspell.wordnet.VerbSynset;
@@ -31,6 +38,12 @@ import edu.stanford.nlp.trees.TreePrint;
 import edu.stanford.nlp.trees.TreebankLanguagePack;
 import edu.stanford.nlp.trees.TypedDependency;
 import edu.stanford.nlp.util.ScoredObject;
+import it.uniroma1.lcl.babelnet.BabelNet;
+import it.uniroma1.lcl.babelnet.BabelNetQuery;
+import it.uniroma1.lcl.babelnet.BabelSense;
+import it.uniroma1.lcl.babelnet.BabelSynset;
+import it.uniroma1.lcl.babelnet.data.BabelSenseSource;
+import it.uniroma1.lcl.jlt.util.Language;
 
 class ParserDemo {
 	/**
@@ -349,6 +362,7 @@ class ParserDemo {
 
 			System.out.println();
 			
+			/* find synonyms by using wordNet
 			System.setProperty("wordnet.database.dir", "/Users/zoey/Downloads/WordNet-3.0/dict");
 			VerbSynset verbSynset;
 			WordNetDatabase database = WordNetDatabase.getFileInstance();
@@ -359,8 +373,16 @@ class ParserDemo {
 				System.out.println(verbSynset.getWordForms()[0] + ": " + verbSynset.getDefinition());
 			}
 			System.out.println("----------");
-
-
+			*/
+			
+			//find synonyms by using BabelNet
+			BabelNet bn = BabelNet.getInstance();
+			BabelNetQuery query = new BabelNetQuery.Builder(act.pred.name).POS(UniversalPOS.VERB).from(Language.EN).build();
+			List<BabelSynset> synset = bn.getSynsets(query);
+			for(int i = 0; i < synset.size(); i++) {
+				System.out.println(synset.get(i).toString());
+			}
+	
 			writer.append("----------------------------------------");
 			writer.newLine();
 
