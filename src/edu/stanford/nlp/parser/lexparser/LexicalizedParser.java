@@ -997,9 +997,7 @@ public List<Tree> parseMultiple(final List<? extends List<? extends HasWord>> se
         log.info("Problem writing out binary trees.");
       }
     }
-    return new 
-
-    		Parser(lex, bg, ug, dg, stateIndex, wordIndex, tagIndex, op);
+    return new LexicalizedParser(lex, bg, ug, dg, stateIndex, wordIndex, tagIndex, op);
   }
 
 
