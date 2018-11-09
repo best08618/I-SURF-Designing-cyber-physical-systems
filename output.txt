@@ -1,33 +1,53 @@
-Number 1 parse has dobj.
-Sentence : ATM displays main screen.
-----------------------------------------
-Sentence : User inserts card.
-There are no dobj in 5 parses
-===========================================================================
-Sentence : ATM requests password.
+Number 5 parse has dobj.
+Sentence : Seungwoo is doing well.
+Sentence : Seungwoo is doing well.
 There are no dobj in 5 parses
 ===========================================================================
 Number 1 parse has dobj.
-Sentence : User enters password.
-----------------------------------------
-Number 3 parse has dobj.
-Sentence : ATM verifies account.
+Sentence : The customer inserts ATM card into the ATM machine.
 ----------------------------------------
 Number 1 parse has dobj.
-Sentence : Consortium verifies card with bank.
-----------------------------------------
-Sentence : ATM requests password.
-There are no dobj in 5 parses
-===========================================================================
-Sentence : User chooses ‘cancel’.
-There are no dobj in 5 parses
-===========================================================================
-Number 1 parse has dobj.
-Sentence : ATM ejects card.
+Sentence : The customer enters PIN.
 ----------------------------------------
 Number 1 parse has dobj.
-Sentence : User takes card.
+Sentence : The system validates the ATM card.
 ----------------------------------------
 Number 1 parse has dobj.
-Sentence : ATM displays main screen.
+Sentence : The system validates the PIN.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The customer selects the ‘Cash Withdrawal’ option from the Options Menu. 
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The system prompts the customer to enter the amount of cash that he or she wants to withdraw.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The customer enters a cash amount.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The customer selects the ‘Submit’ option on the Cash Withdrawal Screen.
+----------------------------------------
+Number 2 parse has dobj.
+Sentence : The system validates the amount entered.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The system checks account balance.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The system asks a receipt for the transaction.
+----------------------------------------
+Number 2 parse has dobj.
+Sentence : The customer selects ‘Yes’ on the Receipts Screen.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The system ejects the ATM card.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The system provides the cash. 
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The system prints the receipt.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : The system updates the account balance of the customer in the system.
 ----------------------------------------

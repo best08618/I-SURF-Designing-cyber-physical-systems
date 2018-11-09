@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Noun {
 	String name;
-	ArrayList<Modifier> modarr;
+	ArrayList<Modifier> modarr; //hash 형태로 변경 
 	String depIdx;
 	String govIdx;
 
