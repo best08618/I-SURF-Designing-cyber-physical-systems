@@ -1,4 +1,5 @@
 package edu.stanford.nlp.parser.lexparser.demo;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,7 +8,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -28,6 +32,7 @@ import edu.stanford.nlp.trees.TypedDependency;
 import edu.stanford.nlp.util.ScoredObject;
 
 class ParserDemo {
+
 	/**
 	 * The main method demonstrates the easiest way to load a parser. Simply call
 	 * loadModel and specify the path of a serialized grammar model, which can be a
@@ -81,11 +86,12 @@ class ParserDemo {
 		// to DocumentPreprocessor
 		File file = new File(filename);
 		FileReader fileReader = new FileReader(file);
-		BufferedReader bufReader = new BufferedReader(fileReader);
 		BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
 
 		String line = "";
-		while ((line = bufReader.readLine()) != null) {
+		Action act = new Action();
+
+		while ((line = new BufferedReader(fileReader).readLine()) != null) {
 			System.out.println("----------------------------------------");
 			List<ScoredObject<Tree>> parses;
 			Tree final_tree = null;
@@ -114,10 +120,8 @@ class ParserDemo {
 						writer.newLine();
 						writer.write("Sentence : " + line);
 						writer.newLine();
-
 						System.out.println("Number " + ii + " parse has dobj.");
 						System.out.println("Sentence : " + line);
-
 						final_tree = t;
 						final_tdl = tdl;
 						break;
@@ -136,12 +140,10 @@ class ParserDemo {
 				continue;
 			}
 
-			TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
+			//TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
 			// typedDependencies -> Dependecy in TreePrint function
 			// System.out.println("printTree function \n");
-			tp.printTree(final_tree);
-
-			Action act = new Action();
+			//tp.printTree(final_tree);
 			int sub_flag = 0;
 			String rel_clause = "";
 
@@ -159,9 +161,7 @@ class ParserDemo {
 
 			for (int i = 0; i < final_tdl.size(); i++) {
 				String extractElement = final_tdl.get(i).reln().toString();
-
 				if (extractElement.contains("nsubj")) {
-
 					if (sub_flag == 1) {
 						String rel_gov = "";
 						String rel_dep = "";
@@ -299,7 +299,17 @@ class ParserDemo {
 						beforeGovIdx = final_tdl.get(i).gov().toCopyIndex();
 					}
 				}
+				
+				else if (extractElement.equals("mark")) {
+					Modifier mod = new Modifier();
+					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+					mod.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+					mod.setRelation(extractElement);
+					act.setModifier(mod);
+				}
 
+				// describe about this section
 				if (sub_flag == 1) {
 					boolean isModifierOfDobj = false;
 					if (extractElement.equals("ref")) {
@@ -327,6 +337,7 @@ class ParserDemo {
 				System.out.println(" Modifier of Nsubj : " + act.subj.modarr.get(i).name);
 				System.out.println(" Relation name : " + act.subj.modarr.get(i).relation);
 			}
+			
 			System.out.println(" Verb : " + act.pred.name);
 
 			for (int i = 0; i < act.modarr.size(); i++) {
@@ -341,6 +352,50 @@ class ParserDemo {
 					System.out.println(" Relation name : " + act.dobjarr.get(i).modarr.get(j).relation);
 				}
 			}
+			
+			String data = "";
+			String cardNumber = "";
+			Database user = new Database();
+		
+			
+			if (act.subj.name.equals("system")) {
+				if(act.pred.name.equals("update")) {
+					updateBalance(user);
+				}
+				else if(act.pred.name.equals("validate") && act.pred.name.equals("check")) { // dobj확인하고 인자로 넘겨야한
+					for (Noun dobj : act.dobjarr) {
+						if (dobj.name.equals("card")) {
+							validateData(cardNumber,act,user);
+						} else {
+							validateData(data,act,user);
+						}
+					}
+				}
+				else if(act.pred.name.equals("ask")) {
+					askReceipt();
+				}
+				else if(act.pred.name.equals("provide")) {
+					provideCash(user);
+				}
+				else if(act.pred.name.equals("print")) {
+					printReceipt(user);
+				}
+				else if(act.pred.name.equals("eject")) {
+					ejectCard();
+				}
+			}
+			
+			else if (act.subj.name.equals("customer")) {
+				if(act.pred.equals("select")) {
+					selectOption(act);
+				}
+				else if(act.pred.name.equals("enter")) {
+					data = enterData(act, user);
+				}
+				else if(act.pred.name.equals("insert")) {
+					cardNumber = insertCard();
+				}
+			}
 
 			System.out.println();
 
@@ -351,8 +406,101 @@ class ParserDemo {
 			// typedDependencies -> Dependecy in TreePrint function
 			// System.out.println("printTree function \n");
 			// tp.printTree(final_tree);
+			writer.close();
 		}
-		writer.close();
+	}
+
+	// Map<String, String> index = new HashMap<>();
+	// index.containsKey("depIdx");
+	// index.containsKey("govIdx");
+
+	// 동사 lemma처리 후 동의어를 찾는 것 처럼 목적어도 PIN , PIN NUMBER 이런 애들은 같은 부류로 묶어놔야 한다 - 이 작업도
+	// 하기
+
+	private ParserDemo() {
+	} // static methods only
+
+	public static String insertCard() {
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Enter your Card Number");
+		String num = reader.next();
+		return num;
+	}
+
+	// String data는 user가 입력한 data, Action act는 dobj가 pin/balance/card 중 무엇인지 확인하기
+	// 위한 용도
+	public static boolean validateData(String data, Action act, Database user) {
+		for (Noun dobj : act.dobjarr) {
+			if (dobj.name.equals("pin")) {
+				if (data.equals(user.getPin()))
+					return true;
+			} else if (dobj.name.equals("balance")) {
+				if (data.equals(user.getBalance()))
+					return true;
+			} else if (dobj.name.equals("card")) {
+				if (data.equals(user.getCardNum()))
+					return true;
+			} else if (dobj.name.equals("amount")) {
+				if (data.equals(user.getAmount()))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	// 우선 이 use case에 맞게 써놓기
+	public static void selectOption(Action act) {
+		for (Modifier mod : act.modarr) {
+			if (mod.equals("withdrawal")) {
+				System.out.println("You select Cash Withdrawal.");
+			} else if (mod.equals("submit")) {
+				System.out.println("You select 'Sumbit'.");
+			}
+		}
+		for (Noun dobj : act.dobjarr) {
+			if (dobj.equals("yes")) {
+				System.out.println("You select 'Yes'.");
+			}
+		}
+	}
+
+	public static void askReceipt() {
+		System.out.println("Do you need a receipt?");
+	}
+
+	public static String enterData(Action act, Database user) {
+		Scanner reader = new Scanner(System.in);
+		String str = "";
+		for (Noun dobj : act.dobjarr) {
+			if (dobj.equals("amount")) {
+				System.out.println("Enter a cash amount.");
+				str = reader.next();
+				user.setAmount(str);
+			} else if (dobj.equals("pin")) {
+				System.out.println("Enter the PIN");
+				str = reader.next();
+			}
+		}
+		return str;
+	}
+
+	public static void ejectCard() {
+		System.out.println("Eject your card.");
+	}
+
+	public static void provideCash(Database user) {
+		System.out.println(user.getAmount());
+	}
+
+	public static void printReceipt(Database user) {
+		System.out.println("Balance : " + user.getBalance());
+		System.out.println("Debit : " + user.getAmount());
+	}
+
+	public static void updateBalance(Database user) {
+		int currentBalance = Integer.parseInt(user.getBalance()) - Integer.parseInt(user.getAmount());
+		String balance = Integer.toString(currentBalance);
+		user.setBalance(balance);
 	}
 
 	/**
@@ -510,6 +658,7 @@ class ParserDemo {
 				dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
 				dobj.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
 				act.setDobj(dobj);
+
 			} else if (extractElement.equals("root")) {
 				Sentence verb = new Sentence(final_tdl.get(i).dep().originalText().toLowerCase());
 				String name = verb.lemma(0);
@@ -619,7 +768,4 @@ class ParserDemo {
 
 		System.out.println();
 	}
-
-	private ParserDemo() {
-	} // static methods only
 }

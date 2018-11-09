@@ -5,8 +5,8 @@ import java.util.Vector;
 public class Action { // state class
 	Noun subj;
 	Verb pred;
-	Vector<Noun> dobjarr;
-	Vector<Modifier> modarr;
+	Vector<Noun> dobjarr; //hash 형태로 변경 
+	Vector<Modifier> modarr; //hash 형태로 변경 
 
 	public Action() {
 		this.subj = new Noun();
