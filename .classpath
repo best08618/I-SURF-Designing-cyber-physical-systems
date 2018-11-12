@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/slf4j-api-1.7.12-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/slf4j-api.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/stanford-parser-3.9.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/stanford-parser-3.9.1-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-parser-full-2018-02-27/stanford-parser.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-openie.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-openie-models.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-english-corenlp-2018-02-27-models.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1-models.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-corenlp-3.9.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/slf4j-simple.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/slf4j-api.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/protobuf.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/stanford-openie-3.6.0.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger-3.9.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger-3.9.1-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger.jar"/>
-	<classpathentry kind="lib" path="/Users/zoey/Downloads/tagger/stanford-postagger-3.9.1.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="test/src">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
