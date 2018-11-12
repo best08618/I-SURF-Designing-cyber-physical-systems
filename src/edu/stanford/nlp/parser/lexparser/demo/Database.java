@@ -7,10 +7,10 @@ public class Database {
 	private String amount;
 	
 	public Database() {
-		this.PIN = "";
-		this.CardNumber = "";
-		this.balance = "";
-		this.amount = "";
+		this.PIN = "1234";
+		this.CardNumber = "312";
+		this.balance = "3000";
+		this.amount = "0";
 	}
 	
 	public void setPin (String pin) {

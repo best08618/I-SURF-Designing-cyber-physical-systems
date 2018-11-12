@@ -1,4 +1,3 @@
-Seungwoo is doing well.
 The customer inserts ATM card into the ATM machine.
 The customer enters PIN.
 The system validates the ATM card.
@@ -15,3 +14,6 @@ The system ejects the ATM card.
 The system provides the cash. 
 The system prints the receipt.
 The system updates the account balance of the customer in the system.
+
+
+
