@@ -1549,8 +1549,7 @@ public List<Tree> parseMultiple(final List<? extends List<? extends HasWord>> se
       if (pq.parse(op.tlpParams.defaultTestSentence())) {
         lp.getTreePrint().printTree(pq.getBestParse(), pwOut);
       } else {
-        pwErr.println("Error. Can't parse test sentence: " +EM
-                      op.tlpParams.defaultTestSentence());
+        pwErr.println("Error. Can't parse test sentence: " + op.tlpParams.defaultTestSentence());
       }
     } else {
       // We parse filenames given by the remaining arguments
