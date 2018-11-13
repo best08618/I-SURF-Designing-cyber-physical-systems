@@ -69,4 +69,4 @@ Questions about CoreNLP can either be posted on StackOverflow with the tag [stan
 2018 I-SURF Project 
 Designing Cyber-Physical Systems from Specifications using Natural Language Processing 
 NLP Processing with Standford parser
->>>>>>> refs/remotes/origin/master
+
