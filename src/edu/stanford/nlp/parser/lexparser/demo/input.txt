@@ -14,6 +14,3 @@ The system ejects the ATM card.
 The system provides the cash. 
 The system prints the receipt.
 The system updates the account balance of the customer in the system.
-
-
-
