@@ -1,0 +1,48 @@
+Query text: The customer inserts ATM card into the ATM machine.
+Detected intent: insertCard (confidence: 1.0)
+
+Query text: The customer enters PIN.
+Detected intent: enterData (confidence: 1.0)
+
+Query text: The system validates the ATM card.
+Detected intent: vaildateData (confidence: 1.0)
+
+Query text: The system validates the PIN.
+Detected intent: vaildateData (confidence: 1.0)
+
+Query text: The customer selects the 'Cash Withdrawal' option from the Options Menu. 
+Detected intent: SelectOption (confidence: 1.0)
+
+Query text: The system prompts the customer to enter the amount of cash that he or she wants to withdraw.
+Detected intent: requestUserTo (confidence: 1.0)
+
+Query text: The customer enters a cash amount.
+Detected intent: enterData (confidence: 1.0)
+
+Query text: The customer selects the 'Submit' option on the Cash Withdrawal Screen.
+Detected intent: SelectOption (confidence: 1.0)
+
+Query text: The system validates the amount entered.
+Detected intent: vaildateData (confidence: 1.0)
+
+Query text: The system checks account balance.
+Detected intent: vaildateData (confidence: 1.0)
+
+Query text: The system asks a receipt for the transaction.
+Detected intent: requestUserTo (confidence: 1.0)
+
+Query text: The customer selects 'Yes' on the Receipts Screen.
+Detected intent: SelectOption (confidence: 1.0)
+
+Query text: The system ejects the ATM card.
+Detected intent: ejectCard (confidence: 1.0)
+
+Query text: The system provides the cash. 
+Detected intent: provideCash (confidence: 1.0)
+
+Query text: The system prints the receipt.
+Detected intent: printReceipt (confidence: 1.0)
+
+Query text: The system updates the account balance of the customer in the system.
+Detected intent: updateBalance (confidence: 1.0)
+	

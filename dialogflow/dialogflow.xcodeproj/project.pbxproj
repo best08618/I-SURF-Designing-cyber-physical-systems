@@ -1,0 +1,72 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXFileReference section */
+		C4F28A2C21950CB20062AC9F /* detect.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = detect.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		C4F28A2521950C870062AC9F = {
+			isa = PBXGroup;
+			children = (
+				C4F28A2C21950CB20062AC9F /* detect.py */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		C4F28A2621950C870062AC9F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+			};
+			buildConfigurationList = C4F28A2921950C870062AC9F /* Build configuration list for PBXProject "dialogflow" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C4F28A2521950C870062AC9F;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		C4F28A2A21950C870062AC9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		C4F28A2B21950C870062AC9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C4F28A2921950C870062AC9F /* Build configuration list for PBXProject "dialogflow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4F28A2A21950C870062AC9F /* Debug */,
+				C4F28A2B21950C870062AC9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4F28A2621950C870062AC9F /* Project object */;
+}
