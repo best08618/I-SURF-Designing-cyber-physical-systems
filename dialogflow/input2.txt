@@ -1,0 +1,20 @@
+Customer inserts ATM card.
+ATM runs BIT.
+ATM reads information on the card.
+ATM validates information on the card.
+ATM displays prompts for PIN.
+Customer enters PIN.
+ATM validates PIN by checking a MD5 hash.
+ATM displays prompt asking "Which operation do you want to perform?"
+Customer selects "Cash withdrawal"
+ATM displays prompt for amount to withdraw. 
+Customer enters amount
+ATM displays prompt requesting from which account to withdraw. 
+Customer selects the account type (checking, saving, credit).
+ATM communicates with the ATM network to authorize user by validating account ID, PIN, and availability of the amount requested.
+The ATM displays prompt asking the Customer whether he/she wants a receipt.
+ATM asks the client to withdraw the card. 
+Customer withdraws the card. (This is a security measure to ensure that Customers do not leave their cards in the machine.)
+ATM sends a message over the ATM Comm link to the main bank computer commanding that the amount to be dispensed is deducted from the Customer's account.
+ATM dispenses the requested amount of cash.
+ATM prints receipt.

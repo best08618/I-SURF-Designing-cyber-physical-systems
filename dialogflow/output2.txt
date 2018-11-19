@@ -1,0 +1,59 @@
+Query text: Customer inserts ATM card.
+Detected intent: insertCard (confidence: 0.800000011921)
+
+Query text: ATM runs BIT.
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: ATM reads information on the card.
+Detected intent: ejectCard (confidence: 0.330000013113)
+
+Query text: ATM validates information on the card.
+Detected intent: vaildateData (confidence: 0.40000000596)
+
+Query text: ATM displays prompts for PIN.
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: Customer enters PIN.
+Detected intent: enterData (confidence: 1.0)
+
+Query text: ATM validates PIN by checking a MD5 hash.
+Detected intent: vaildateData (confidence: 0.610000014305)
+
+Query text: ATM displays prompt asking "Which operation do you want to perform?"
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: Customer selects "Cash withdrawal"
+Detected intent: SelectOption (confidence: 0.860000014305)
+
+Query text: ATM displays prompt for amount to withdraw. 
+Detected intent: requestUserTo (confidence: 0.340000003576)
+
+Query text: Customer enters amount
+Detected intent: enterData (confidence: 1.0)
+
+Query text: ATM displays prompt requesting from which account to withdraw. 
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: Customer selects the account type (checking, saving, credit).
+Detected intent: SelectOption (confidence: 0.629999995232)
+
+Query text: ATM communicates with the ATM network to authorize user by validating account ID, PIN, and availability of the amount requested.
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: The ATM displays prompt asking the Customer whether he/she wants a receipt.
+Detected intent: requestUserTo (confidence: 0.540000021458)
+
+Query text: ATM asks the client to withdraw the card. 
+Detected intent: requestUserTo (confidence: 0.370000004768)
+
+Query text: Customer withdraws the card. (This is a security measure to ensure that Customers do not leave their cards in the machine.)
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: ATM sends a message over the ATM Comm link to the main bank computer commanding that the amount to be dispensed is deducted from the Customer's account.
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: ATM dispenses the requested amount of cash.
+Detected intent: Default Fallback Intent (confidence: 1.0)
+
+Query text: ATM prints receipt.
+Detected intent: printReceipt (confidence: 1.0)
