@@ -36,7 +36,7 @@ def get_string_value(response):
     # get list type entities from query_result
     list_entities = query_result['parameters'].values()
     intent_entity = ''
-
+    
     for entity in list_entities:
         # if entity is not empty then print entity
         if bool(entity.strip()):
@@ -44,7 +44,6 @@ def get_string_value(response):
             encode_entity = entity.encode('ascii','replace')
             # replace white space or questionmark with underscore
             intent_entity = encode_entity.replace(' ','_').replace('?','_')
-
     return intent_entity
 
 # detect intent by text based on trained phrases in ATM-Agent
@@ -53,7 +52,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
         Returns the result of detect intent with texts as inputs.
         Using the same `session_id` between requests allows continuation
         of the conversation.
-    '''
+        '''
     file = open('output.txt','w')
     
     import dialogflow_v2 as dialogflow
@@ -72,17 +71,29 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
         file.write('=' * 20 + '\n')
         file.write('Query text: {}'.format(response.query_result.query_text))
         file.write('Detected intent: {} (confidence: {})\n'.format(detected_intent, response.query_result.intent_detection_confidence))
-        intent_entity = get_string_value(response)
-        file.write(detected_intent + '(' + intent_entity + ')\n')
+        #intent_entity = get_string_value(response)
+        #file.write(detected_intent + '(' + intent_entity + ')\n')
         print('=' * 20)
         print('Query text: {}'.format(response.query_result.query_text))
         print('Detected intent: {} (confidence: {})\n'.format(detected_intent, response.query_result.intent_detection_confidence))
-        print( detected_intent + '(' + intent_entity + ')')
+    #print( detected_intent + '(' + intent_entity + ')')
     
-    return detected_intent, intent_entity
+    return detected_intent
+
+def convert_text_format(detected_intent):
+    object={'User->ATM:': ['insert', 'enter', 'select'], 'ATM->User:' : ['request', 'prompt'], 'ATM->ATM:': ['validate']}
+    
+    for text, actions in object.items():
+        for action in actions:
+            if action in detect_intent_texts:
+                file.write(text + detect_intent)
+                print(text + detect_intent)
+
 
 if __name__ == '__main__':
     explicit()
     file = open('input.txt','r')
     query_text = file.readlines()
-    detect_intent_texts('seungwoojeong-5b90a',str(uuid.uuid4()),query_text,'en-US')
+    detected_intent_text = detect_intent_texts('seungwoojeong-5b90a',str(uuid.uuid4()),query_text,'en-US')
+    convert_text_format(detect_intent_text)
+
