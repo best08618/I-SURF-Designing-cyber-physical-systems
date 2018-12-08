@@ -1,10 +1,9 @@
-The system validates the ATM card.
-The system validates the PIN.
-The system prompts the customer to enter the amount of cash that he or she wants to withdraw.
-The system validates the amount entered.
-The system checks account balance.
-The system asks a receipt for the transaction.
-The system ejects the ATM card.
-The system provides the cash. 
-The system prints the receipt.
-The system updates the account balance of the customer in the system.
+The user inserts her ATM card.
+The ATM validates the card.
+The ATM requests that the user enter her PIN.
+The user enters her PIN.
+The ATM validates the PIN.
+The ATM prompts the user to choose an operation.
+The user selects "Withdraw".
+The ATM prompts the user for the account to use.
+The user selects "Savings".

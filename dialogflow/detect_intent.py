@@ -18,82 +18,109 @@
 import dialogflow
 import uuid
 
-def explicit():
+def choose_service_account_file():
+    '''
+        This function help to choose to explictly point to your service account file in code.
+        '''
     from google.cloud import storage
     # Explicitly use service account credentials by specifying the private key file.
     storage_client = storage.Client.from_service_account_json('/Users/zoey/Desktop/dialogflow/seungwoojeong-ff342a8a00e6.json')
-    
     # Make an authenticated API request
     buckets = list(storage_client.list_buckets())
     print(buckets)
 
-# get 'string_value' in JSON object which describes entities
-def get_string_value(response):
+def get_enitity_names(response):
+    '''
+        This function return entity names of each text from string_value of parameters in query result
+        
+        input - response : <class 'google.cloud.dialogflow_v2.types.DetectIntentResponse'>
+        output - entity_names : list
+        '''
     from google.protobuf.json_format import MessageToDict
-    # convery query_result to dict type
+    # convert query_result to dict type
     query_result = MessageToDict(response.query_result)
-    
     # get list type entities from query_result
-    list_entities = query_result['parameters'].values()
-    intent_entity = ''
+    entities = query_result['parameters'].values()
+    entity_names = []
     
     for entity in list_entities:
-        # if entity is not empty then print entity
+        # Check if the entity is empty
         if bool(entity.strip()):
-            # encode unicode type entity to ascii type
-            encode_entity = entity.encode('ascii','replace')
-            # replace white space or questionmark with underscore
-            intent_entity = encode_entity.replace(' ','_').replace('?','_')
-    return intent_entity
+            # Encode unicode type entity to ascii type
+            encoded_entity_name = entity.encode('ascii','replace')
+            # Replace white space or questionmark with underscore
+            entity_names.append(encoded_entity_name.replace(' ','_').replace('?','_'))
 
-# detect intent by text based on trained phrases in ATM-Agent
+    return entity_names
+
+
 def detect_intent_texts(project_id, session_id, texts, language_code):
     '''
-        Returns the result of detect intent with texts as inputs.
-        Using the same `session_id` between requests allows continuation
-        of the conversation.
-        '''
-    file = open('output.txt','w')
-    
-    import dialogflow_v2 as dialogflow
-    session_client = dialogflow.SessionsClient()
-    
-    session = session_client.session_path(project_id, session_id)
-    print('Session path: {}\n'.format(session))
-    
-    # print intent in each sentence with entities which is argument of function
-    for text in texts:
-        text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
-        query_input = dialogflow.types.QueryInput(text=text_input)
-        response = session_client.detect_intent(session=session, query_input=query_input)
-        detected_intent = response.query_result.intent.display_name
+        This function detects intent with texts based on trained phrases
+        in ATM-Agent and return the result of detect intent with as inputs.
         
-        file.write('=' * 20 + '\n')
-        file.write('Query text: {}'.format(response.query_result.query_text))
-        file.write('Detected intent: {} (confidence: {})\n'.format(detected_intent, response.query_result.intent_detection_confidence))
-        #intent_entity = get_string_value(response)
-        #file.write(detected_intent + '(' + intent_entity + ')\n')
-        print('=' * 20)
+        input - project_id : str, session_id : str, texts : list, language_code : str
+        output - intent_name : str / intent name of each text in input.txt file
+        
+        '''
+    
+    # Open output.txt file
+    file = open('output.txt','w')
+    import dialogflow_v2 as dialogflow
+    #session_client : <class 'dialogflow_v2.SessionsClient'>
+    session_client = dialogflow.SessionsClient()
+    # session : unicode
+    session = session_client.session_path(project_id, session_id)
+    
+    # Print and write Query text and UML-text-format
+    for text in texts:
+        # text_input : <class 'google.cloud.dialogflow_v2.types.TextInput'>
+        # Represents the natural language text to be processed.
+        text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
+        # query_input : <class 'google.cloud.dialogflow_v2.types.QueryInput'>
+        query_input = dialogflow.types.QueryInput(text=text_input)
+        # response : <class 'google.cloud.dialogflow_v2.types.DetectIntentResponse'>
+        # Contains response_id and query result which is selected results of the conversational query
+        response = session_client.detect_intent(session=session, query_input=query_input)
+        intent_name = response.query_result.intent.display_name
+        participant_order_of_uml_text_format = get_participant_order(intent_name)
+        print('=' * 40)
         print('Query text: {}'.format(response.query_result.query_text))
-        print('Detected intent: {} (confidence: {})\n'.format(detected_intent, response.query_result.intent_detection_confidence))
-    #print( detected_intent + '(' + intent_entity + ')')
+        print('output : {}'.format(participant_order_of_uml_text_format + intent_name))
+        file.write(participant_order_of_uml_text_format + intent_name + '\n')
     
-    return detected_intent
+    return intent_name
 
-def convert_text_format(detected_intent):
-    object={'User->ATM:': ['insert', 'enter', 'select'], 'ATM->User:' : ['request', 'prompt'], 'ATM->ATM:': ['validate']}
+
+def get_participant_order(intent_name):
+    '''
+        This function returns participant order(ATM->ATM) of UML text format
+        with intent name as inputs.
+        
+        input - intent_name : str / intent name of each text in input.txt file
+        output - participant_order : str / participant order of UML text format
+        
+        '''
     
-    for text, actions in object.items():
+    # Assign the specific actions to each situation
+    # where one participant gives a message to another participant
+    uml_text_format = {
+        'User->ATM:': ['insert', 'enter', 'select'],
+        'ATM->User:' : ['request', 'prompt'],
+        'ATM->ATM:': ['validate']
+    }
+    
+    # Find a participant order from intent name
+    # when the verb of intent name matches with an action in uml_text_format
+    for participant_order, actions in uml_text_format.items():
         for action in actions:
-            if action in detect_intent_texts:
-                file.write(text + detect_intent)
-                print(text + detect_intent)
-
+            if action in intent_name:
+                return participant_order
 
 if __name__ == '__main__':
-    explicit()
+    choose_service_account_file()
     file = open('input.txt','r')
     query_text = file.readlines()
-    detected_intent_text = detect_intent_texts('seungwoojeong-5b90a',str(uuid.uuid4()),query_text,'en-US')
-    convert_text_format(detect_intent_text)
+    detect_intent_texts('seungwoojeong-5b90a',str(uuid.uuid4()),query_text,'en-US')
+
 
