@@ -1,40 +1,9 @@
-====================
-Query text: The system validates the ATM card.
-Detected intent: vaildateData (confidence: 1.0)
-vaildateData(ATM_card)
-====================
-Query text: The system validates the PIN.
-Detected intent: vaildateData (confidence: 1.0)
-vaildateData(PIN)
-====================
-Query text: The system prompts the customer to enter the amount of cash that he or she wants to withdraw.
-Detected intent: askAmount (confidence: 1.0)
-askAmount(cash_amount)
-====================
-Query text: The system validates the amount entered.
-Detected intent: vaildateData (confidence: 1.0)
-vaildateData(cash_amount)
-====================
-Query text: The system checks account balance.
-Detected intent: vaildateData (confidence: 1.0)
-vaildateData(account_balance)
-====================
-Query text: The system asks a receipt for the transaction.
-Detected intent: askReceipt (confidence: 1.0)
-askReceipt(receipt)
-====================
-Query text: The system ejects the ATM card.
-Detected intent: ejectCard (confidence: 1.0)
-ejectCard(card)
-====================
-Query text: The system provides the cash. 
-Detected intent: printData (confidence: 1.0)
-printData(cash)
-====================
-Query text: The system prints the receipt.
-Detected intent: printData (confidence: 1.0)
-printData(receipt)
-====================
-Query text: The system updates the account balance of the customer in the system.
-Detected intent: update (confidence: 1.0)
-update(account_balance)
+User->ATM:insertCard
+ATM->ATM:validateCard
+ATM->User:requestPIN
+User->ATM:enterPIN
+ATM->ATM:validatePIN
+ATM->User:promptOperation
+User->ATM:selectWithdraw
+ATM->User:promptAccount
+User->ATM:selectSavings
